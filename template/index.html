@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MPG prediction usecase</title>
+</head>
+<body style="background-color:rgb(80,150,0);">
+
+    <style>
+        h2 {text-align: center;}
+        h3 {text-align: center;}
+        div {text-align: center;
+            font-weight: bold;}
+        input {text-align: center;}
+    </style>
+
+    <h2>check mileage of your car instantly</h2>
+
+    <h3>ENTER DETAILS</h3>
+    <br>
+    <form method="post" enctype="multipart/form-data" action="predictMPG">
+ {% csrf_token %}
+ <div>
+ <div class="col-md-4 col-sm-4"><label for="fname">Cylinders:</label> </div> <input name="cylinderVal" type="text" value={{temp.cylinders}}><br><br>
+ <div class="col-md-4 col-sm-4"><label for="lname">Displacement(km):</label> </div> <input type="text" id="lname" name="dispVal" value={{temp.displacement}}><br><br>
+ <!--<div class="col-md-4 col-sm-4"><label for="lname">horsepower:</label> </div> <input type="text" id="fname" name="hrsPwrValue" value={{temp.horsepower}}><br><br> -->
+ <div class="col-md-4 col-sm-4"><label for="lname">weight(kg):</label> </div> <input type="text" id="lname" name="weightVal" value={{temp.weight}}><br><br>
+ <div class="col-md-4 col-sm-4"><label for="lname">acceleration(m/sec^2):</label> </div> <input type="text" id="fname" name="accVal" value={{temp.acceleration}}><br><br>
+ <div class="col-md-4 col-sm-4"><label for="lname">modelyr:</label> </div> <input type="text" id="lname" name="modelVal" value={{temp.model_year}}><br><br>
+ <div class="col-md-4 col-sm-4"><label for="lname">origin(1:USA,2:JAPAN,3:OTHERS):</label> </div> <input type="text" id="lname" name="originVal" value={{temp.origin}}><br><br>
+<br>
+<input type="submit" value="submit" ></div>
+</form>
+<br>
+</div>
+
+</body>
+</html>

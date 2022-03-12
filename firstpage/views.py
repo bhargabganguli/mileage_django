@@ -3,17 +3,9 @@ from django.http import HttpResponse
 #we will import pandas
 import pandas as pd
 # Create your views here.
-
-
-
-
 #import mysql.connector
 #from mysql.connector.constants import ClientFlag
 #this will start first page
-
-
-
-
 
 def index(request):
     return render(request, 'index.html')
@@ -24,7 +16,7 @@ def result(request):
     if request.method == "POST":
         file = request.FILES["myFile"]
         csv=pd.read_csv(file)
-        print(csv.head())
+      
         arr=csv["cyl"]
         sumation=sum(arr)
 
@@ -43,7 +35,7 @@ def result(request):
  #       mycursor.execute("DROP TABLE IF EXISTS mytable;")
 
  #       csv.to_sql(con=my_conn,name='mytable',if_exists='append',index=False)
-        return render(request, "index.html",{"something":2})
+        return render(request, "index.html",{"something":2},sumation)
     else:
         return render(request, "index.html")
 

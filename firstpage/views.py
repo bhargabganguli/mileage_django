@@ -18,7 +18,7 @@ def result(request):
         csv=pd.read_csv(file)
       
         arr=csv["cyl"]
-        sumation={'x':sum(arr)}
+        sumation={'x':"sum value"}
         
 
 #        import sqlalchemy

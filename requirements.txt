@@ -2,3 +2,4 @@ django==3.0.3
 numpy==1.21.0
 pandas==1.2.5
 joblib==1.0.1
+sklearn-pandas==2.2.0

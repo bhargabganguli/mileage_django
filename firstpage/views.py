@@ -105,9 +105,10 @@ def viewdb(request):
             'b':'cylinder',
         }
     return render(request, 'database.html',context2)
-"""
+
 def predictMPG(request):
 
+"""    
     import pandas as pd
     import numpy as np
     from sklearn import pipeline,preprocessing,metrics,model_selection,ensemble
@@ -171,10 +172,14 @@ def predictMPG(request):
 #    coef=regr.coef_
 #    scoreval = res.predict(exog=dict(x1=testDtaa))
     #scoreval=2
-    context={'scoreval':scoreval,'summary':res.summary().as_csv()}
+    """
+    context={'scoreval':"predicted value",'summary':"reg summary"}
+    
     return render(request, 'result.html',context)
 
 def boxplot(request):
+    
+    """
     import matplotlib.pyplot as plt
     from io import StringIO
 
@@ -198,11 +203,14 @@ def boxplot(request):
     imgdata.seek(0)
 
     dta = imgdata.getvalue()
-    context={'something':True , 'graph':dta}
+    """
+    context={'something':True , 'graph':"BOXPLOT"}
+    
     return render(request, 'result.html',context)
 
 
 def barplot(request):
+    """
     import matplotlib.pyplot as plt
     from io import StringIO
 
@@ -227,7 +235,8 @@ def barplot(request):
     imgdata.seek(0)
 
     dta = imgdata.getvalue()
-    context={'something2':True , 'graph2':dta}
+    """
+    context={'something2':True , 'graph2':"barplot"}
+    
     return render(request, 'result.html',context)
-"""
 

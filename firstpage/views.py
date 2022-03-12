@@ -43,7 +43,7 @@ def result(request):
  #       mycursor.execute("DROP TABLE IF EXISTS mytable;")
 
  #       csv.to_sql(con=my_conn,name='mytable',if_exists='append',index=False)
- #       return render(request, "index.html",{"something":2})
+        return render(request, "index.html",{"something":2})
     else:
         return render(request, "index.html")
 

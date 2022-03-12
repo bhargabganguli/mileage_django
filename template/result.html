@@ -5,11 +5,44 @@
         h1 {text-align: center;}
         p {text-align: center;}
         div {text-align: center;}
+        input {text-align: center;
+            background-color:rgb(0,1000,0);
+            font-weight: bold;
+        }
     </style>
     <title>MPG prediction usecase</title>
 </head>
 <body style="background-color:powderblue;">
+    {% if scoreval %}
     <h1 style="color:blue;">EXPECTED MILEAGE : {{scoreval}} <p style="color:green">miles per galon</p></h1>
+    <h1 style="color:blue;">RSQ VALUE : {{summary}} </h1>
+    <!--
+    <h1 style="color:blue;">coeff values : {{coef}} </h1>
+    -->
+    {% endif %}
+    <br>
+    <center>
+    <form method="post" enctype="multipart/form-data" action="boxplot">
+        {% csrf_token %}
+            <input type="submit" value="VIEW boxplot" style="height:70px; width:400px" >
+    </form>
+
+    <form method="post" enctype="multipart/form-data" action="barplot">
+        {% csrf_token %}
+            <input type="submit" value="VIEW bar" style="height:70px; width:400px" >
+    </form>
+    <center>
+    {% if something %}
+    <center>
+        {{ graph|safe }}
+    </center>
+    {% endif %}
+
+    {% if something2 %}
+    <center>
+        {{ graph2|safe }}
+    </center>
+    {% endif %}
 
 </body>
 </html>

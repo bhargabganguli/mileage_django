@@ -17,9 +17,18 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 from firstpage import views
-
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     url('^$',views.index, name='Homepage'),
     url('predictMPG',views.predictMPG,name='PredictMPG'),
+    url('MPGdb',views.viewdb,name='PredictMPG'),
+    url('submit',views.result,name='upload'),
+    url('upload',views.upload,name='upload'),
+    url('boxplot',views.boxplot,name='PredictMPG'),
+    url('barplot',views.barplot,name='PredictMPG'),
 ]
+
+urlpatterns += staticfiles_urlpatterns()

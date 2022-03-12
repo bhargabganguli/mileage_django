@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>Upload</title>
+    </head>
+
+    <body style="background-color:rgb(80,110,0)">
+        <style>
+        table{
+            height:30%;
+            width:60%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        th, td {
+            border:1px solid black;
+            height:20%;
+            width:10%;
+            margin-left: auto;
+            margin-right: auto;
+          }
+        </style>
+        <h1>Upload such .csv file which has the following structure</h1>
+
+        <table summary="no_orderDate" bgcolor=#ffb3b3>
+        <tr>
+            <td>mpg</td>
+            <td>cylinder</td>
+            <td>disp</td>
+            <td>hp</td>
+            <td>wt</td>
+            <td>acc</td>
+            <td>modyr</td>
+            <td>origin</td>
+            <td>name</td>
+        </tr>
+        </table>
+        <br>
+        <form method="POST" action="/submit" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="myFile"><br>
+            <input type="submit" name="submit">
+        </form>
+
+    </body>
+</html>

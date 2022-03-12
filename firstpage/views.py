@@ -108,7 +108,7 @@ def viewdb(request):
 
 def predictMPG(request):
 
-"""    
+    """    
     import pandas as pd
     import numpy as np
     from sklearn import pipeline,preprocessing,metrics,model_selection,ensemble

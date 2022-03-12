@@ -7,7 +7,7 @@ import pandas as pd
 
 
 
-import mysql.connector
+#import mysql.connector
 #from mysql.connector.constants import ClientFlag
 #this will start first page
 
@@ -29,21 +29,21 @@ def result(request):
         sumation=sum(arr)
 
 
-        import sqlalchemy
-        from sqlalchemy import create_engine
-        my_conn=create_engine("mysql+mysqldb://bhargab:Rahara2004@bhargab.mysql.pythonanywhere-services.com/bhargab$mileage")
+#        import sqlalchemy
+#        from sqlalchemy import create_engine
+#        my_conn=create_engine("mysql+mysqldb://bhargab:Rahara2004@bhargab.mysql.pythonanywhere-services.com/bhargab$mileage")
         #mydb = mysql.connector.connect(host="bhargab.mysql.pythonanywhere-services.com", user="bhargab", passwd="Rahara2004", database="bhargab$mileage")
         #mycursor = mydb.cursor()
         #csv.to_sql(con=mydb, name='mytable2', if_exists='replace')
         #mydb.commit()
 
-        mydb = mysql.connector.connect(host="bhargab.mysql.pythonanywhere-services.com", user="bhargab", passwd="Rahara2004", database="bhargab$mileage")
-        mycursor = mydb.cursor()
+ #       mydb = mysql.connector.connect(host="bhargab.mysql.pythonanywhere-services.com", user="bhargab", passwd="Rahara2004", database="bhargab$mileage")
+ #       mycursor = mydb.cursor()
 
-        mycursor.execute("DROP TABLE IF EXISTS mytable;")
+ #       mycursor.execute("DROP TABLE IF EXISTS mytable;")
 
-        csv.to_sql(con=my_conn,name='mytable',if_exists='append',index=False)
-        return render(request, "index.html",{"something":2})
+ #       csv.to_sql(con=my_conn,name='mytable',if_exists='append',index=False)
+ #       return render(request, "index.html",{"something":2})
     else:
         return render(request, "index.html")
 
@@ -53,11 +53,11 @@ def upload(request):
 
 
 def viewdb(request):
-    mydb = mysql.connector.connect(host="bhargab.mysql.pythonanywhere-services.com", user="bhargab", passwd="Rahara2004", database="bhargab$mileage")
-    mycursor = mydb.cursor()
+#    mydb = mysql.connector.connect(host="bhargab.mysql.pythonanywhere-services.com", user="bhargab", passwd="Rahara2004", database="bhargab$mileage")
+#    mycursor = mydb.cursor()
 
-    mycursor.execute("select * from mytable;")
-    result=mycursor.fetchall()
+#    mycursor.execute("select * from mytable;")
+#    result=mycursor.fetchall()
 
     mpg = []
     cyl = []
@@ -69,31 +69,31 @@ def viewdb(request):
     origin = []
     name = []
 
-    for a_tuple in result:
+    for a_tuple in csv:
         mpg.append(a_tuple[0])
 
-    for a_tuple in result:
+    for a_tuple in csv:
         cyl.append(a_tuple[1])
 
-    for a_tuple in result:
+    for a_tuple in csv:
         disp.append(a_tuple[2])
 
-    for a_tuple in result:
+    for a_tuple in csv:
         hp.append(a_tuple[3])
 
-    for a_tuple in result:
+    for a_tuple in csv:
         wt.append(a_tuple[4])
 
-    for a_tuple in result:
+    for a_tuple in csv:
         acc.append(a_tuple[5])
 
-    for a_tuple in result:
+    for a_tuple in csv:
         modyr.append(a_tuple[6])
 
-    for a_tuple in result:
+    for a_tuple in csv:
         origin.append(a_tuple[7])
 
-    for a_tuple in result:
+    for a_tuple in csv:
         name.append(a_tuple[8])
 
 
@@ -105,7 +105,7 @@ def viewdb(request):
             'b':'cylinder',
         }
     return render(request, 'database.html',context2)
-
+"""
 def predictMPG(request):
 
     import pandas as pd
@@ -115,10 +115,10 @@ def predictMPG(request):
     from sklearn.preprocessing import OneHotEncoder
     import statsmodels.api as sm
 
-    mydb = mysql.connector.connect(host="bhargab.mysql.pythonanywhere-services.com", user="bhargab", passwd="Rahara2004", database="bhargab$mileage")
-    mycursor = mydb.cursor()
+    #mydb = mysql.connector.connect(host="bhargab.mysql.pythonanywhere-services.com", user="bhargab", passwd="Rahara2004", database="bhargab$mileage")
+    #mycursor = mydb.cursor()
 
-    data=pd.read_sql('select * from mytable',mydb)
+    #data=pd.read_sql('select * from mytable',mydb)
 
     # target and features
     y=data.iloc[:,[0]]
@@ -229,5 +229,5 @@ def barplot(request):
     dta = imgdata.getvalue()
     context={'something2':True , 'graph2':dta}
     return render(request, 'result.html',context)
-
+"""
 

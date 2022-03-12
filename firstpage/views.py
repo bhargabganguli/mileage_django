@@ -18,8 +18,8 @@ def result(request):
         csv=pd.read_csv(file)
       
         arr=csv["cyl"]
-        sumation=sum(arr)
-
+        sumation={x:sum(arr)}
+        
 
 #        import sqlalchemy
 #        from sqlalchemy import create_engine
@@ -35,7 +35,7 @@ def result(request):
  #       mycursor.execute("DROP TABLE IF EXISTS mytable;")
 
  #       csv.to_sql(con=my_conn,name='mytable',if_exists='append',index=False)
-        return render(request, "index.html",{"something":2})
+        return render(request, "index.html",{"something":2},sumation)
     else:
         return render(request, "index.html")
 

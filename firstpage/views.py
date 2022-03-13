@@ -6,9 +6,10 @@ import pandas as pd
 #import mysql.connector
 #from mysql.connector.constants import ClientFlag
 #this will start first page
-from sklearn import pipeline,preprocessing,metrics,model_selection,ensemble
+"""from sklearn import pipeline,preprocessing,metrics,model_selection,ensemble
 from sklearn_pandas import DataFrameMapper
 from sklearn.preprocessing import OneHotEncoder
+"""
 import statsmodels.api as sm
 
 def index(request):

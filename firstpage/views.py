@@ -30,8 +30,10 @@ def result(request):
         pipeline_obj=pipeline.Pipeline([("model",LinearRegression())])
         pipeline_obj.fit(X,y)
         pipeline_obj.predict(X)
+        """
         import joblib
         joblib.dump(pipeline_obj,'RegModelforMPG4.pkl')
+        """
         #joblib.dump(pipeline_obj,'RegModelforMPG4.pkl')
         
 #        import sqlalchemy

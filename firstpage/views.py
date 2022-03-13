@@ -6,6 +6,10 @@ import pandas as pd
 #import mysql.connector
 #from mysql.connector.constants import ClientFlag
 #this will start first page
+from sklearn import pipeline,preprocessing,metrics,model_selection,ensemble
+from sklearn_pandas import DataFrameMapper
+from sklearn.preprocessing import OneHotEncoder
+import statsmodels.api as sm
 
 def index(request):
     return render(request, 'index.html')
@@ -21,7 +25,14 @@ def result(request):
         sumation={'x':"sum value"}
         y=csv.iloc[:,[0]]
         X=csv.iloc[:,[1,2,4,5]]
-
+        from sklearn.linear_model import LinearRegression
+        pipeline_obj=pipeline.Pipeline([("model",LinearRegression())])
+        pipeline_obj.fit(X,y)
+        pipeline_obj.predict(X)
+        import joblib
+        joblib.dump(pipeline_obj,'RegModelforMPG4.pkl')
+        #joblib.dump(pipeline_obj,'RegModelforMPG4.pkl')
+        
 #        import sqlalchemy
 #        from sqlalchemy import create_engine
 #        my_conn=create_engine("mysql+mysqldb://bhargab:Rahara2004@bhargab.mysql.pythonanywhere-services.com/bhargab$mileage")
@@ -36,6 +47,7 @@ def result(request):
  #       mycursor.execute("DROP TABLE IF EXISTS mytable;")
 
  #       csv.to_sql(con=my_conn,name='mytable',if_exists='append',index=False)
+    
         return render(request, "index.html",{"something":2 , 'x':X})
     else:
         return render(request, "index.html")
@@ -140,7 +152,7 @@ def predictMPG(request):
     joblib.dump(pipeline_obj,'RegModelforMPG4.pkl')
     #joblib.dump(pipeline_obj,'RegModelforMPG4.pkl')
 
-
+"""
 
     #print (request)
     if request.method == 'POST':
@@ -158,15 +170,15 @@ def predictMPG(request):
     reloadModel=joblib.load('/home/bhargab/RegModelforMPG4.pkl')
 
     scoreval = reloadModel.predict(testDtaa)[0][0]
-    rsq = reloadModel.score(X,y)
+  #  rsq = reloadModel.score(X,y)
     #coef = reloadModel.coef_
 #    regr=LinearRegression()
 #    regr.fit(X,y)
 #    coef=regr.coef_
 #    scoreval = res.predict(exog=dict(x1=testDtaa))
     #scoreval=2
-    """
-    context={'scoreval':"predicted value",'summary':"reg summary"}
+    
+    context={'scoreval':scoreval,'summary':"reg summary"}
     
     return render(request, 'result.html',context)
 

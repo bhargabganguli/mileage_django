@@ -167,7 +167,7 @@ def predictMPG(request):
 
     testDtaa = pd.DataFrame({'x':temp}).transpose()
 
-    reloadModel=joblib.load('/home/bhargab/RegModelforMPG4.pkl')
+    """reloadModel=joblib.load('/home/bhargab/RegModelforMPG4.pkl')
 
     scoreval = reloadModel.predict(testDtaa)[0][0]
   #  rsq = reloadModel.score(X,y)
@@ -177,8 +177,8 @@ def predictMPG(request):
 #    coef=regr.coef_
 #    scoreval = res.predict(exog=dict(x1=testDtaa))
     #scoreval=2
-    
-    context={'scoreval':scoreval,'summary':"reg summary"}
+    """
+    context={'scoreval':"scoreval",'summary':"reg summary"}
     
     return render(request, 'result.html',context)
 

@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'bhargabbbrio'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F073BDE9976040D5A7A3C936B52B90E0 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FE5B2D690F284069A5DCAD7215C740C2 }}

@@ -13,16 +13,12 @@ from sklearn.preprocessing import OneHotEncoder
 import statsmodels.api as sm
 
 def index(request):
-    
-    scoreval=request.session.get('scoreval')
-    if scoreval is None:
-        scoreval=2
-    request.session['scoreval'] = scoreval
     return render(request, 'index.html')
 
 
 #this is user defined function to load the csv data into a  dataframe(name=csv) and to upload it in mysql database
 def result(request):
+    
     if request.method == "POST":
         file = request.FILES["myFile"]
         csv=pd.read_csv(file)
@@ -35,6 +31,10 @@ def result(request):
         pipeline_obj=pipeline.Pipeline([("model",LinearRegression())])
         pipeline_obj.fit(X,y)
         pipeline_obj.predict(X)
+        scoreval=request.session.get('scoreval')
+        if scoreval is None:
+            scoreval=3
+        request.session['scoreval'] = scoreval
         
         import joblib
         joblib.dump(pipeline_obj,'RegModelforMPG4.pkl')

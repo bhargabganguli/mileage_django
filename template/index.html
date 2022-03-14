@@ -53,16 +53,15 @@
     {% endif %}
     </center>
 
+    <form action="/area_plot">
+    <input type="submit" value="check important factors" style="height:70px; width:120px">
+    </form>
+    
     {% if something %}
 
     <h3>ENTER DETAILS</h3>
     <br>
-
-
-
-    <!--
-    <img src="{% static 'end.png' %}" alt="hi">
-    -->
+   
 
     <form method="post" enctype="multipart/form-data" action="predictMPG">
  {% csrf_token %}

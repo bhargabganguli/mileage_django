@@ -59,8 +59,9 @@ def result(request):
  #       csv.to_sql(con=my_conn,name='mytable',if_exists='append',index=False)
             """
     
-        return render(request, "index.html",{"something":2 , 'x':"sum"})
+        return render(request, "index.html",{"something":2 , 'x':reg_fit})
     else:
+        reg_fit = 5        
         return render(request, "index.html")
 
 ##this is user defined function to go to the upload html page where is the upload button of csv file

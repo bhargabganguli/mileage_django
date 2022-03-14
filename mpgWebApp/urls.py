@@ -29,6 +29,8 @@ urlpatterns = [
     url('upload',views.upload,name='upload'),
     url('boxplot',views.boxplot,name='PredictMPG'),
     url('barplot',views.barplot,name='PredictMPG'),
+    url('imp_features',views.imp_features,name='impfeat'),
+
 ]
 
 urlpatterns += staticfiles_urlpatterns()

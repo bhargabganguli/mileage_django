@@ -30,6 +30,7 @@ urlpatterns = [
     url('boxplot',views.boxplot,name='PredictMPG'),
     url('barplot',views.barplot,name='PredictMPG'),
     url('imp_features',views.imp_features,name='impfeat'),
+    url('area_plot',views.area_plot,name='area_plot'),
 
 ]
 

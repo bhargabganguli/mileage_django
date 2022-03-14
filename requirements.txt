@@ -5,3 +5,4 @@ joblib==1.0.1
 sklearn-pandas==2.2.0
 statsmodels==0.13.2
 matplotlib-inline==0.1.2
+matplotlib

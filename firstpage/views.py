@@ -41,7 +41,7 @@ def result(request):
         
         feat_importances = pd.Series(model.feature_importances_, index=X.columns)
         #feat_importances.nlargest(25).plot(kind='barh',figsize=(10,10))
-        
+        feat_importances_plot = pd.DataFrame(feat_importances).plot(kind = 'barh')
         global regression
         def regression(x_pred,x_data = X, y_data=y):
             pipeline_obj=pipeline.Pipeline([("model",LinearRegression())])
@@ -75,7 +75,7 @@ def result(request):
  #       csv.to_sql(con=my_conn,name='mytable',if_exists='append',index=False)
             """
     
-        return render(request, "index.html",{"something":2 , 'x':feat_importances})
+        return render(request, "index.html",{"something":2 , 'x':feat_importances_plot})
     else:
         reg_fit = 5        
         return render(request, "index.html")

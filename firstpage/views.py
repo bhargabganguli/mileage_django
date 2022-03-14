@@ -43,9 +43,10 @@ def result(request):
         pred = model.predict(X_test)
         
         feat_importances = pd.Series(model.feature_importances_, index=X.columns)
+        x=feat_importances.to_dict()
+        plt.bar(list(x.keys()),list(x.values()))
         #feat_importances.nlargest(25).plot(kind='barh',figsize=(10,10))
         #feat_importances_plot = pd.DataFrame(feat_importances).plot(kind = 'barh')
-        plt.plot(range(10))
         fig = plt.gcf()
         buffer = BytesIO()
         fig.savefig(buffer, format='png')

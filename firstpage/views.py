@@ -10,7 +10,7 @@ from sklearn import pipeline,preprocessing,metrics,model_selection,ensemble
 from sklearn_pandas import DataFrameMapper
 from sklearn.preprocessing import OneHotEncoder
 import matplotlib.pyplot as plt
-#from io import StringIO
+from io import StringIO
 import statsmodels.api as sm
 reg_fit = 1
 def index(request):
@@ -42,6 +42,16 @@ def result(request):
         feat_importances = pd.Series(model.feature_importances_, index=X.columns)
         #feat_importances.nlargest(25).plot(kind='barh',figsize=(10,10))
         feat_importances_plot = pd.DataFrame(feat_importances).plot(kind = 'barh')
+        fig = plt.figure(pd.DataFrame(feat_importances))
+        plt.bar()
+        plt.xlabel("imp")
+        plt.ylabel("attributes")
+        plt.title("importance")
+        imgdata = StringIO()
+        fig.savefig(imgdata, format='svg')
+        imgdata.seek(0)
+        dta = imgdata.getvalue()
+        
         global regression
         def regression(x_pred,x_data = X, y_data=y):
             pipeline_obj=pipeline.Pipeline([("model",LinearRegression())])
@@ -75,7 +85,7 @@ def result(request):
  #       csv.to_sql(con=my_conn,name='mytable',if_exists='append',index=False)
             """
     
-        return render(request, "index.html",{"something":2 , 'x':feat_importances_plot})
+        return render(request, "index.html",{"something":2 , 'x':dta})
     else:
         reg_fit = 5        
         return render(request, "index.html")

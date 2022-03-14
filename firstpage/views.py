@@ -170,7 +170,7 @@ def predictMPG(request):
 
     testDtaa = pd.DataFrame({'x':temp}).transpose()
 
-    reloadModel=joblib.load('/home/bhargab/RegModelforMPG4.pkl')
+    reloadModel=joblib.load('RegModelforMPG4.pkl')
 
     scoreval = reloadModel.predict(testDtaa)[0][0]
   #  rsq = reloadModel.score(X,y)

@@ -13,11 +13,6 @@ from sklearn.preprocessing import OneHotEncoder
 import statsmodels.api as sm
 
 def index(request):
-    scoreval=request.session.get('scoreval')
-    if scoreval is None:
-        scoreval=3
-    request.session['scoreval'] = scoreval
-    
     return render(request, 'index.html')
 
 
@@ -33,11 +28,12 @@ def result(request):
         y=csv.iloc[:,[0]]
         X=csv.iloc[:,[1,2,4,5]]
         from sklearn.linear_model import LinearRegression
-        pipeline_obj=pipeline.Pipeline([("model",LinearRegression())])
-        pipeline_obj.fit(X,y)
-        pipeline_obj.predict(X)
         
-        
+        def regression(x_pred_data,x_data=X,y_data=y):
+            pipeline_obj=pipeline.Pipeline([("model",LinearRegression())])
+            pipeline_obj.fit(x_data,y_data)
+            pred = pipeline_obj.predict(x_pred_data)
+            return pred
         import joblib
         joblib.dump(pipeline_obj,'RegModelforMPG4.pkl')
         
@@ -193,11 +189,9 @@ def predictMPG(request):
 #    scoreval = res.predict(exog=dict(x1=testDtaa))
     #scoreval=2
     
-    scoreval = request.session.get('scoreval')
-    
+    scoreval = regression(testDtaa)
     context={'scoreval':scoreval,'summary':"reg summary"}
     
-    del request.session['scoreval']
     
     return render(request, 'result.html',context)
 

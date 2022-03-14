@@ -40,7 +40,7 @@ def result(request):
         pred = model.predict(X_test)
         
         feat_importances = pd.Series(model.feature_importances_, index=X.columns)
-        feat_importances.nlargest(25).plot(kind='barh',figsize=(10,10))
+        #feat_importances.nlargest(25).plot(kind='barh',figsize=(10,10))
         
         global regression
         def regression(x_pred,x_data = X, y_data=y):

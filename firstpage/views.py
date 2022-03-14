@@ -11,7 +11,7 @@ from sklearn_pandas import DataFrameMapper
 from sklearn.preprocessing import OneHotEncoder
 
 import statsmodels.api as sm
-reg_fit = 0
+reg_fit = 1
 def index(request):
     return render(request, 'index.html')
 

@@ -42,8 +42,10 @@ def result(request):
         feat_importances = pd.Series(model.feature_importances_, index=X.columns)
         #feat_importances.nlargest(25).plot(kind='barh',figsize=(10,10))
         feat_importances_plot = pd.DataFrame(feat_importances).plot(kind = 'barh')
-        fig = plt.figure(pd.DataFrame(feat_importances))
-        plt.bar()
+        
+        imp = pd.DataFrame(feat_importances)
+        fig = plt.figure()
+        plt.bar(imp.columns,imp.values)
         plt.xlabel("imp")
         plt.ylabel("attributes")
         plt.title("importance")

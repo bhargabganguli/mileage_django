@@ -20,7 +20,7 @@ def index(request):
 
 
 def imp_features(request):
-        imp()
+        uri=imp()
         return render(request, 'mmm.html',{'x':uri})
     
     
@@ -71,7 +71,7 @@ def result(request):
             pred = pipeline_obj.predict(x_pred)
             return pred
         
-        return render(request, "index.html",{"something":2 , 'x':uri})
+        return render(request, "index.html",{"something":2 , 'x':"uri"})
     else:
         reg_fit = 5        
         return render(request, "index.html")

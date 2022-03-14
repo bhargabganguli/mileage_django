@@ -13,6 +13,8 @@ from sklearn.preprocessing import OneHotEncoder
 import statsmodels.api as sm
 
 def index(request):
+    global scoreval
+    scoreval=2
     return render(request, 'index.html')
 
 
@@ -170,9 +172,10 @@ def predictMPG(request):
 
     testDtaa = pd.DataFrame({'x':temp}).transpose()
 
-    reloadModel=joblib.load('RegModelforMPG4.pkl')
-
+    """reloadModel=joblib.load('RegModelforMPG4.pkl')
+    
     scoreval = reloadModel.predict(testDtaa)[0][0]
+    """
   #  rsq = reloadModel.score(X,y)
     #coef = reloadModel.coef_
 #    regr=LinearRegression()

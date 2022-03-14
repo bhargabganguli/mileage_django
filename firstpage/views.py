@@ -43,12 +43,15 @@ def result(request):
         joblib.dump(pipeline_obj,'RegModelforMPG4.pkl')
         
         #joblib.dump(pipeline_obj,'RegModelforMPG4.pkl')
-        
+        """
         import sqlalchemy
         from sqlalchemy import create_engine
         my_conn=create_engine("Driver={ODBC Driver 13 for SQL Server};Server=tcp:bhargabbbrio.database.windows.net,1433;Database=bhargab;Uid=bhargab;Pwd={your_password_here};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;")
+        
         #mydb = mysql.connector.connect(host="bhargab.mysql.pythonanywhere-services.com", user="bhargab", passwd="Rahara2004", database="bhargab$mileage")
+        
         #mycursor = mydb.cursor()
+        
         #csv.to_sql(con=mydb, name='mytable2', if_exists='replace')
         #mydb.commit()
 
@@ -58,6 +61,7 @@ def result(request):
  #       mycursor.execute("DROP TABLE IF EXISTS mytable;")
 
  #       csv.to_sql(con=my_conn,name='mytable',if_exists='append',index=False)
+            """
     
         return render(request, "index.html",{"something":2 , 'x':pipeline_obj.predict(X)})
     else:

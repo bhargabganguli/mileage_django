@@ -11,6 +11,8 @@ from sklearn_pandas import DataFrameMapper
 from sklearn.preprocessing import OneHotEncoder
 import matplotlib.pyplot as plt
 from io import StringIO
+from io import BytesIO
+import base64
 import statsmodels.api as sm
 reg_fit = 1
 def index(request):

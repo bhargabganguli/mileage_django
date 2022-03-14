@@ -43,16 +43,14 @@ def result(request):
         
         feat_importances = pd.Series(model.feature_importances_, index=X.columns)
         #feat_importances.nlargest(25).plot(kind='barh',figsize=(10,10))
-        feat_importances_plot = pd.DataFrame(feat_importances).plot(kind = 'barh')
-        
+        #feat_importances_plot = pd.DataFrame(feat_importances).plot(kind = 'barh')
+        plt.plot(range(10))
+        fig = plt.gcf()
         buffer = BytesIO()
-        plt.savefig(buffer, format='png')
+        fig.savefig(buffer, format='png')
         buffer.seek(0)
-        image_png = buffer.getvalue()
-        buffer.close()
-
-        graphic = base64.b64encode(image_png)
-        graphic = graphic.decode('utf-8')
+        string = base64.b64encode(buffer.read())
+        uri = urllib.parse.quote(string) 
         
         global regression
         def regression(x_pred,x_data = X, y_data=y):
@@ -87,7 +85,7 @@ def result(request):
  #       csv.to_sql(con=my_conn,name='mytable',if_exists='append',index=False)
             """
     
-        return render(request, "index.html",{"something":2 , 'x':graphic})
+        return render(request, "index.html",{"something":2 , 'x':uri})
     else:
         reg_fit = 5        
         return render(request, "index.html")

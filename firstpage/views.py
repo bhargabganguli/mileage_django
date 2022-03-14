@@ -19,6 +19,11 @@ def index(request):
     return render(request, 'index.html')
 
 
+def imp_features(request):
+        imp()
+        return render(request, 'mmm.html',{'x':uri})
+    
+    
 #this is user defined function to load the csv data into a  dataframe(name=csv) and to upload it in mysql database
 def result(request):
     
@@ -36,24 +41,28 @@ def result(request):
         from sklearn.model_selection import train_test_split
         from sklearn.metrics import mean_absolute_error as mae
     
-        X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.25,random_state=0)
-        model = RandomForestRegressor(random_state=1)
-        model.fit(X_train, y_train)
-        pred = model.predict(X_test)
         
-        feat_importances = pd.Series(model.feature_importances_, index=X.columns)
-        x=feat_importances.to_dict()
-        plt.bar(list(x.keys()),list(x.values()))
-        plt.xlabel("attributes")
-        plt.ylabel("importance")
-        #feat_importances.nlargest(25).plot(kind='barh',figsize=(10,10))
-        #feat_importances_plot = pd.DataFrame(feat_importances).plot(kind = 'barh')
-        fig = plt.gcf()
-        buffer = BytesIO()
-        fig.savefig(buffer, format='png')
-        buffer.seek(0)
-        string = base64.b64encode(buffer.read())
-        uri = urllib.parse.quote(string) 
+        global imp
+        def imp(x_data=X,y_data=y):
+            X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.25,random_state=0)
+            model = RandomForestRegressor(random_state=1)
+            model.fit(X_train, y_train)
+            pred = model.predict(X_test)
+            feat_importances = pd.Series(model.feature_importances_, index=x_data.columns)
+            x=feat_importances.to_dict()
+            plt.bar(list(x.keys()),list(x.values()))
+            plt.xlabel("attributes")
+            plt.ylabel("importance")
+            #feat_importances.nlargest(25).plot(kind='barh',figsize=(10,10))
+            #feat_importances_plot = pd.DataFrame(feat_importances).plot(kind = 'barh')
+            fig = plt.gcf()
+            buffer = BytesIO()
+            fig.savefig(buffer, format='png')
+            buffer.seek(0)
+            string = base64.b64encode(buffer.read())
+            uri = urllib.parse.quote(string) 
+            return uri
+
         
         global regression
         def regression(x_pred,x_data = X, y_data=y):

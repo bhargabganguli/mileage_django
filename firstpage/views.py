@@ -51,7 +51,7 @@ def result(request):
 
  #       csv.to_sql(con=my_conn,name='mytable',if_exists='append',index=False)
     
-        return render(request, "index.html",{"something":2 , 'x':X})
+        return render(request, "index.html",{"something":2 , 'x':pipeline_obj.predict(X)})
     else:
         return render(request, "index.html")
 

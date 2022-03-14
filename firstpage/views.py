@@ -9,7 +9,8 @@ import pandas as pd
 from sklearn import pipeline,preprocessing,metrics,model_selection,ensemble
 from sklearn_pandas import DataFrameMapper
 from sklearn.preprocessing import OneHotEncoder
-
+import matplotlib.pyplot as plt
+#from io import StringIO
 import statsmodels.api as sm
 reg_fit = 1
 def index(request):

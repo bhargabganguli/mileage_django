@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 #we will import pandas
 import pandas as pd
+import urllib
 # Create your views here.
 #import mysql.connector
 #from mysql.connector.constants import ClientFlag

@@ -16,7 +16,7 @@ import base64
 import statsmodels.api as sm
 reg_fit = 1
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'index.html'.{'imp':False})
 
 
 def imp_features(request):
@@ -71,7 +71,7 @@ def result(request):
             pred = pipeline_obj.predict(x_pred)
             return pred
         
-        return render(request, "index.html",{"something":2 , 'x':"uri"})
+        return render(request, "index.html",{"something":2 , 'x':"uri", 'imp':True})
     else:
         reg_fit = 5        
         return render(request, "index.html")

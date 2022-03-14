@@ -22,6 +22,7 @@ def index(request):
     return render(request, 'index.html', {'imp':False})
 
 def area_plot(request):
+    x_data,y_data=data()
     return render(request, 'index.html')
 
 def imp_features(request):
@@ -45,7 +46,9 @@ def result(request):
         from sklearn.ensemble import RandomForestRegressor
         from sklearn.model_selection import train_test_split
         from sklearn.metrics import mean_absolute_error as mae
-    
+        global data
+        def data(x_data=X,y_data=y):
+            return(x_data,y_data)
         
         global imp
         def imp(x_data=X,y_data=y):

@@ -28,6 +28,19 @@ def result(request):
         y=csv.iloc[:,[0]]
         X=csv.iloc[:,[1,2,4,5]]
         from sklearn.linear_model import LinearRegression
+        
+        from sklearn.ensemble import RandomForestRegressor
+        from sklearn.model_selection import train_test_split
+        from sklearn.metrics import mean_absolute_error as mae
+    
+        X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.25,random_state=0)
+        model = RandomForestRegressor(random_state=1)
+        model.fit(X_train, y_train)
+        pred = model.predict(X_test)
+        
+        feat_importances = pd.Series(model.feature_importances_, index=X.columns)
+        feat_importances.nlargest(25).plot(kind='barh',figsize=(10,10))
+        
         global regression
         def regression(x_pred,x_data = X, y_data=y):
             pipeline_obj=pipeline.Pipeline([("model",LinearRegression())])
@@ -61,7 +74,7 @@ def result(request):
  #       csv.to_sql(con=my_conn,name='mytable',if_exists='append',index=False)
             """
     
-        return render(request, "index.html",{"something":2 , 'x':"reg_fit"})
+        return render(request, "index.html",{"something":2 , 'x':"feat_importances"})
     else:
         reg_fit = 5        
         return render(request, "index.html")

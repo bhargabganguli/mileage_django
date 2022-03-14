@@ -40,7 +40,7 @@ def area_plot(request):
     string = base64.b64encode(buffer.read())
     uri = urllib.parse.quote(string)     
     
-    return render(request, 'index.html', {'x':uri})
+    return render(request, 'mmm.html', {'x':uri})
 
 def imp_features(request):
         uri=imp()

@@ -34,9 +34,10 @@ def result(request):
             pipeline_obj.fit(x_data,y_data)
             pred = pipeline_obj.predict(x_pred_data)
             return pred
+        """
         import joblib
         joblib.dump(pipeline_obj,'RegModelforMPG4.pkl')
-        
+        """
         #joblib.dump(pipeline_obj,'RegModelforMPG4.pkl')
         """
         import sqlalchemy

@@ -44,9 +44,9 @@ def result(request):
         
         #joblib.dump(pipeline_obj,'RegModelforMPG4.pkl')
         
-#        import sqlalchemy
-#        from sqlalchemy import create_engine
-#        my_conn=create_engine("mysql+mysqldb://bhargab:Rahara2004@bhargab.mysql.pythonanywhere-services.com/bhargab$mileage")
+        import sqlalchemy
+        from sqlalchemy import create_engine
+        my_conn=create_engine("Driver={ODBC Driver 13 for SQL Server};Server=tcp:bhargabbbrio.database.windows.net,1433;Database=bhargab;Uid=bhargab;Pwd={your_password_here};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;")
         #mydb = mysql.connector.connect(host="bhargab.mysql.pythonanywhere-services.com", user="bhargab", passwd="Rahara2004", database="bhargab$mileage")
         #mycursor = mydb.cursor()
         #csv.to_sql(con=mydb, name='mytable2', if_exists='replace')

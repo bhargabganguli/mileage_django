@@ -13,6 +13,10 @@ from sklearn.preprocessing import OneHotEncoder
 import statsmodels.api as sm
 
 def index(request):
+    scoreval=request.session.get('scoreval')
+    if scoreval is None:
+        scoreval=3
+    request.session['scoreval'] = scoreval
     return render(request, 'index.html')
 
 
@@ -31,10 +35,7 @@ def result(request):
         pipeline_obj=pipeline.Pipeline([("model",LinearRegression())])
         pipeline_obj.fit(X,y)
         pipeline_obj.predict(X)
-        scoreval=request.session.get('scoreval')
-        if scoreval is None:
-            scoreval=3
-        request.session['scoreval'] = scoreval
+        
         
         import joblib
         joblib.dump(pipeline_obj,'RegModelforMPG4.pkl')

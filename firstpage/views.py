@@ -28,11 +28,13 @@ def result(request):
         y=csv.iloc[:,[0]]
         X=csv.iloc[:,[1,2,4,5]]
         from sklearn.linear_model import LinearRegression
-        pipeline_obj=pipeline.Pipeline([("model",LinearRegression())])
-        pipeline_obj.fit(X,y)
+        global regression
+        def regression(x_pred,x_data = X, y_data=y):
+            pipeline_obj=pipeline.Pipeline([("model",LinearRegression())])
+            pipeline_obj.fit(x_data,y_data)
+            pred = pipeline_obj.predict(x_pred)
+            return pred
         
-        reg_fit = 5
-        pred = pipeline_obj.predict(X)
         
         """
         import joblib
@@ -191,7 +193,7 @@ def predictMPG(request):
 #    scoreval = res.predict(exog=dict(x1=testDtaa))
     #scoreval=2
     
-    scoreval = reg_fit
+    scoreval = regression(testDtaa)
     context={'scoreval':scoreval,'summary':"reg summary"}
     
     

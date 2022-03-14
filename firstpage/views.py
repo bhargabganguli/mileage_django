@@ -3,6 +3,7 @@ from django.http import HttpResponse
 #we will import pandas
 import pandas as pd
 import urllib
+from sklearn.linear_model import LinearRegression
 # Create your views here.
 
 
@@ -23,7 +24,22 @@ def index(request):
 
 def area_plot(request):
     x_data,y_data=data()
-    return render(request, 'index.html')
+    lr = LinearRegression()
+    weights = pd.Series(lr.coef_,index=x_data.columns)
+    base = lr.intercept_
+    unadj_contributions = x_data.mul(weights).assign(Base=base)
+    adj_contributions = (unadj_contributions.div(unadj_contributions.sum(axis=1), axis=0).mul(y_data, axis=0)) # contains all contributions for each day
+    ax = (adj_contributions[['Base', 'cylinder', 'Social_Media_1', 'Radio', 'TV']].plot.area(figsize=(16, 10),linewidth=1,title='Predicted Sales and Breakdown',ylabel='Sales',xlabel='Date'))
+    handles, labels = ax.get_legend_handles_labels()
+    ax.legend(handles[::-1], labels[::-1],title='Channels', loc="center left",bbox_to_anchor=(1.01, 0.5))
+    fig = plt.gcf()
+    buffer = BytesIO()
+    fig.savefig(buffer, format='png')
+    buffer.seek(0)
+    string = base64.b64encode(buffer.read())
+    uri = urllib.parse.quote(string)     
+    
+    return render(request, 'index.html', {'x':uri})
 
 def imp_features(request):
         uri=imp()

@@ -46,9 +46,11 @@
     <form action="/upload">
     <input type="submit" value="upload csv file" style="height:70px; width:120px">
     </form>
+    {% if imp %}
     <form action="/imp_features">
     <input type="submit" value="check important factors" style="height:70px; width:120px">
     </form>
+    {% endif %}
     </center>
 
     {% if something %}

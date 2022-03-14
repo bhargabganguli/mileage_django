@@ -13,10 +13,12 @@ from sklearn.preprocessing import OneHotEncoder
 import statsmodels.api as sm
 
 def index(request):
+    """
     scoreval=request.session.get('scoreval')
     if scoreval is None:
         scoreval=3
     request.session['scoreval'] = scoreval
+    """
     return render(request, 'index.html')
 
 
@@ -187,7 +189,9 @@ def predictMPG(request):
 #    coef=regr.coef_
 #    scoreval = res.predict(exog=dict(x1=testDtaa))
     #scoreval=2
+    """
     scoreval = request.session.get('scoreval')
+    """
     context={'scoreval':scoreval,'summary':"reg summary"}
     
     return render(request, 'result.html',context)

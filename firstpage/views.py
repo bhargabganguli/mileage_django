@@ -27,15 +27,15 @@ def area_plot(request):
     lr.fit(x_data, y_data)
     #result = sm.OLS(y_data, x_data).fit()
     #df = pd.read_html(result.summary().tables[1].as_html(),header=0,index_col=0)[0]
-    weights = pd.Series(lr.coef_,index=x_data.columns)
-    a=weights.size
+    #weights = pd.Series(lr.coef_,index=x_data.columns)
+    #a=weights.size
     #weights = pd.Series(result.params)
     #z=type(lr.coef_)
     #weight = pd.Series(np.array([2,3,4,5]),index=X.columns)
     base = lr.intercept_
-
+    weight = pd.Series(lr.coef_)
     
-    #unadj_contributions = x_data.multiply(2).assign(Base=base)
+    unadj_contributions = x_data.mul(weight).assign(Base=base)
     """
     adj_contributions = (unadj_contributions.div(unadj_contributions.sum(axis=1), axis=0).mul(y_data, axis=0)) # contains all contributions for each day
     ax = (adj_contributions[['Base', 'cyl', 'disp', 'wt', 'acc']].plot.area(figsize=(16, 10),linewidth=1,title='Predicted Sales and Breakdown',ylabel='Sales',xlabel='Date'))
@@ -48,7 +48,7 @@ def area_plot(request):
     string = base64.b64encode(buffer.read())
     uri = urllib.parse.quote(string)     
     """
-    return render(request, 'mmm.html', {'x':a})
+    return render(request, 'mmm.html', {'x':unadj_contributions})
 
 def imp_features(request):
         uri=imp()

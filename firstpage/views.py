@@ -18,7 +18,6 @@ import base64
 import statsmodels.api as sm
 reg_fit = 1
 
-
 def index(request):
     return render(request, 'index.html', {'imp':False})
 

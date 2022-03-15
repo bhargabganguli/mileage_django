@@ -26,7 +26,7 @@ def area_plot(request):
     x_data,y_data=data()
     lr = LinearRegression()
     lr.fit(x_data, y_data)
-    weights = pd.Series(lr.coef_,index=X.columns)
+    weights = pd.Series(lr.coef_,index=x_data.columns)
 
     base = lr.intercept_
 

@@ -108,10 +108,11 @@ tuned_model = OptunaSearchCV(
 
 def area_plot(request):
     x_data,y_data=data()
+    
     value=pd.DataFrame.from_dict(tuned_model.best_params_,orient='index',columns=["value"])
     # applying get_value() function 
     tv_sat_a = value._get_value('adstock__tv_pipe__saturation__a', 'value')
-
+    tuned_model.fit(x_data, y_data)
     radio_sat_a = value._get_value('adstock__radio_pipe__saturation__a', 'value')
 
     Social_Media_sat_a = value._get_value('adstock__social_media_pipe__saturation__a', 'value')

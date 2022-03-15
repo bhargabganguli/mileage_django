@@ -21,36 +21,124 @@ reg_fit = 1
 def index(request):
     return render(request, 'index.html', {'imp':False})
 
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.utils.validation import check_is_fitted, check_array
+class ExponentialSaturation(BaseEstimator, TransformerMixin):
+    def __init__(self, a=1.):
+        self.a = a
+        
+    def fit(self, X, y=None):
+        X = check_array(X)
+        self._check_n_features(X, reset=True) # from BaseEstimator
+        return self
+    def transform(self, X):
+        check_is_fitted(self)
+        X = check_array(X)
+        self._check_n_features(X, reset=False) # from BaseEstimator
+        return 1 - np.exp(-self.a*X)
+
+from scipy.signal import convolve2d
+import numpy as np
+class ExponentialCarryover(BaseEstimator, TransformerMixin):
+    def __init__(self, strength=0.5, length=1):
+        self.strength = strength
+        self.length = length
+    def fit(self, X, y=None):
+        X = check_array(X)
+        self._check_n_features(X, reset=True)
+        self.sliding_window_ = (
+            self.strength ** np.arange(self.length + 1)
+        ).reshape(-1, 1)
+        return self
+    def transform(self, X: np.ndarray):
+        check_is_fitted(self)
+        X = check_array(X)
+        self._check_n_features(X, reset=False)
+        convolution = convolve2d(X, self.sliding_window_)
+        if self.length > 0:
+            convolution = convolution[: -self.length]
+        return convolution    
+
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.linear_model import LinearRegression
+adstock = ColumnTransformer(
+    [
+     ('tv_pipe', Pipeline([
+                           ('carryover', ExponentialCarryover()),
+                           ('saturation', ExponentialSaturation())
+     ]), ['TV']),
+     ('radio_pipe', Pipeline([
+                           ('carryover', ExponentialCarryover()),
+                           ('saturation', ExponentialSaturation())
+     ]), ['Radio']),
+     ('social_media_pipe', Pipeline([
+                           ('carryover', ExponentialCarryover()),
+                           ('saturation', ExponentialSaturation())
+     ]), ['Social_Media_1']),
+         ],
+    remainder='passthrough'
+)
+model_adstock = Pipeline([
+                  ('adstock', adstock),
+                  ('regression', LinearRegression())
+])
+
+
+from optuna.integration import OptunaSearchCV
+from optuna.distributions import UniformDistribution, IntUniformDistribution
+tuned_model = OptunaSearchCV(
+    estimator=model_adstock,
+    param_distributions={
+        'adstock__tv_pipe__carryover__strength': UniformDistribution(0, 1),
+        'adstock__tv_pipe__carryover__length': IntUniformDistribution(0, 6),
+        'adstock__tv_pipe__saturation__a': UniformDistribution(0, 0.01),
+        'adstock__radio_pipe__carryover__strength': UniformDistribution(0, 1),
+        'adstock__radio_pipe__carryover__length': IntUniformDistribution(0, 6),
+        'adstock__radio_pipe__saturation__a': UniformDistribution(0, 0.01),
+        'adstock__social_media_pipe__carryover__strength': UniformDistribution(0, 1),
+        'adstock__social_media_pipe__carryover__length': IntUniformDistribution(0, 6),
+        'adstock__social_media_pipe__saturation__a': UniformDistribution(0, 0.01),
+    },
+    n_trials=100,
+    cv=TimeSeriesSplit(),
+    random_state=0
+)
+
 def area_plot(request):
     x_data,y_data=data()
-    lr = LinearRegression()
-    lr.fit(x_data, y_data)
-    #result = sm.OLS(y_data, x_data).fit()
-    #df = pd.read_html(result.summary().tables[1].as_html(),header=0,index_col=0)[0]
-    #weights = pd.Series(lr.coef_,index=x_data.columns)
-    #a=weights.size
-    #weights = pd.Series(result.params)
-    #z=type(lr.coef_)
-    #weight = pd.Series(np.array([2,3,4,5]),index=X.columns)
-    base = lr.intercept_
-    coeff = lr.coef_
-    #weight = pd.Series(coeff.squeeze())
-    
-    #unadj_contributions = x_data.mul(weight).assign(Base=base)
-    unadj_contributions = x_data
-    unadj_contributions = unadj_contributions["Base"]=base
-    adj_contributions = (unadj_contributions.div(unadj_contributions.sum(axis=1), axis=0).mul(y_data, axis=0)) # contains all contributions for each day
-    ax = (adj_contributions[['Base', 'cyl', 'disp', 'wt', 'acc']].plot.area(figsize=(16, 10),linewidth=1,title='Predicted Sales and Breakdown',ylabel='Sales',xlabel='Date'))
-    handles, labels = ax.get_legend_handles_labels()
-    ax.legend(handles[::-1], labels[::-1],title='Channels', loc="center left",bbox_to_anchor=(1.01, 0.5))
+    value=pd.DataFrame.from_dict(tuned_model.best_params_,orient='index',columns=["value"])
+    # applying get_value() function 
+    tv_sat_a = value._get_value('adstock__tv_pipe__saturation__a', 'value')
+
+    radio_sat_a = value._get_value('adstock__radio_pipe__saturation__a', 'value')
+
+    Social_Media_sat_a = value._get_value('adstock__social_media_pipe__saturation__a', 'value')
+
+
+
+    y_axis_TV = 1- np.exp(range(0,1100)*(-tv_sat_a))
+    y_axis_radio = 1- np.exp(range(0,1100)*(-radio_sat_a))
+    y_axis_Social_Media = 1- np.exp(range(0,1100)*(-Social_Media_sat_a))
+
+    import matplotlib.pyplot as plt
+    from matplotlib.pyplot import figure
+
+    plt.plot(range(0,1100),y_axis_TV, label='TV')
+    plt.plot(range(0,1100),y_axis_radio, label='RADIO')
+    plt.plot(range(0,1100),y_axis_Social_Media, label='Social Media')
+
+    plt.legend()
+    plt.show()
+    """
     fig = plt.gcf()
     buffer = BytesIO()
     fig.savefig(buffer, format='png')
     buffer.seek(0)
     string = base64.b64encode(buffer.read())
     uri = urllib.parse.quote(string)     
-    
-    return render(request, 'mmm.html', {'x':uri})
+    """
+    return render(request, 'mmm.html', {'x':"uri"})
 
 def imp_features(request):
         uri=imp()

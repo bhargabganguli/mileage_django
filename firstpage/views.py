@@ -26,9 +26,10 @@ def area_plot(request):
     x_data,y_data=data()
     lr = LinearRegression()
     lr.fit(x_data, y_data)
+    """
     weights = pd.Series(lr.coef_,index=x_data.columns)
     base = lr.intercept_
-    """
+    
     unadj_contributions = x_data.mul(weights).assign(Base=base)
     
     adj_contributions = (unadj_contributions.div(unadj_contributions.sum(axis=1), axis=0).mul(y_data, axis=0)) # contains all contributions for each day

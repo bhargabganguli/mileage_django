@@ -27,10 +27,14 @@ def area_plot(request):
     x_data,y_data=data()
     lr = LinearRegression()
     lr.fit(x_data, y_data)
-    """
-    weights = pd.Series(np.array(lr.coef_),index=x_data.columns)
-    base = lr.intercept_
+    weights = pd.DataFrame(lr.coef_, 
+             X.columns, 
+             columns=['coef'])\
+            .sort_values(by='coef', ascending=False)
     
+    weights = weights.squeeze()
+    base = lr.intercept_
+    """
     unadj_contributions = x_data.mul(weights).assign(Base=base)
     
     adj_contributions = (unadj_contributions.div(unadj_contributions.sum(axis=1), axis=0).mul(y_data, axis=0)) # contains all contributions for each day
@@ -44,7 +48,7 @@ def area_plot(request):
     string = base64.b64encode(buffer.read())
     uri = urllib.parse.quote(string)     
     """
-    return render(request, 'mmm.html', {'x':lr.coef_[0]})
+    return render(request, 'mmm.html', {'x':weights})
 
 def imp_features(request):
         uri=imp()

@@ -26,10 +26,10 @@ def area_plot(request):
     x_data,y_data=data()
     lr = LinearRegression()
     lr.fit(x_data, y_data)
-    weights = list(lr.coef_)
-    weights = pd.Series(weights,index=[x_data.columns])
+    #weights = list(lr.coef_)
+    #weights = pd.Series(weights,index=[x_data.columns])
 
-    base = lr.intercept_
+    #base = lr.intercept_
     """
     unadj_contributions = x_data.mul(weights).assign(Base=base)
     
@@ -44,7 +44,7 @@ def area_plot(request):
     string = base64.b64encode(buffer.read())
     uri = urllib.parse.quote(string)     
     """
-    return render(request, 'mmm.html', {'x':weights})
+    return render(request, 'mmm.html', {'x':lr.intercept_[0][0]})
 
 def imp_features(request):
         uri=imp()

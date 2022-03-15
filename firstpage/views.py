@@ -26,7 +26,9 @@ def area_plot(request):
     x_data,y_data=data()
     lr = LinearRegression()
     lr.fit(x_data, y_data)
-    weights = pd.Series(lr.coef_,index=["column"])
+    weights = list(lr.coef_)
+    weights = pd.Series(weights,index=x_data.columns)
+
     base = lr.intercept_
     """
     unadj_contributions = x_data.mul(weights).assign(Base=base)

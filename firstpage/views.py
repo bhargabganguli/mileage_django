@@ -30,7 +30,7 @@ def area_plot(request):
     base = lr.intercept_
     unadj_contributions = x_data.mul(weights).assign(Base=base)
     adj_contributions = (unadj_contributions.div(unadj_contributions.sum(axis=1), axis=0).mul(y_data, axis=0)) # contains all contributions for each day
-    ax = (adj_contributions[['Base', 'cylinder', 'Social_Media_1', 'Radio', 'TV']].plot.area(figsize=(16, 10),linewidth=1,title='Predicted Sales and Breakdown',ylabel='Sales',xlabel='Date'))
+    ax = (adj_contributions[['Base', 'cyl', 'disp', 'wt', 'acc']].plot.area(figsize=(16, 10),linewidth=1,title='Predicted Sales and Breakdown',ylabel='Sales',xlabel='Date'))
     handles, labels = ax.get_legend_handles_labels()
     ax.legend(handles[::-1], labels[::-1],title='Channels', loc="center left",bbox_to_anchor=(1.01, 0.5))
     fig = plt.gcf()

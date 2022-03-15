@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 #we will import pandas
 import pandas as pd
+
 import urllib
 import numpy as np
 from sklearn.linear_model import LinearRegression

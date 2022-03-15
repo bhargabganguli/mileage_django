@@ -24,7 +24,7 @@ def index(request):
 
 def area_plot(request):
     x_data,y_data=data()
-    lr = LinearRegression()
+    """lr = LinearRegression()
     lr.fit(x_data, y_data)
     weights = pd.Series(lr.coef_,index=x_data.columns)
     base = lr.intercept_
@@ -39,8 +39,8 @@ def area_plot(request):
     buffer.seek(0)
     string = base64.b64encode(buffer.read())
     uri = urllib.parse.quote(string)     
-    
-    return render(request, 'mmm.html', {'x':uri})
+    """
+    return render(request, 'mmm.html', {'x':x_data})
 
 def imp_features(request):
         uri=imp()

@@ -33,7 +33,8 @@ def area_plot(request):
     #z=type(lr.coef_)
     #weight = pd.Series(np.array([2,3,4,5]),index=X.columns)
     base = lr.intercept_
-    weight = pd.Series(lr.coef_)
+    coeff = lr.coef_
+    weight = pd.Series(coeff.squeeze())
     
     unadj_contributions = x_data.mul(weight).assign(Base=base)
     """

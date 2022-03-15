@@ -9,7 +9,7 @@ from sklearn.linear_model import LinearRegression
 
 #this will start first page
 from sklearn import pipeline,preprocessing,metrics,model_selection,ensemble
-from sklearn_pandas import DataFrameMapper
+#from sklearn_pandas import DataFrameMapper
 from sklearn.preprocessing import OneHotEncoder
 import matplotlib.pyplot as plt
 from io import StringIO
@@ -26,8 +26,9 @@ def area_plot(request):
     x_data,y_data=data()
     lr = LinearRegression()
     lr.fit(x_data, y_data)
-    #weights = list(lr.coef_)
-    #weights = pd.Series(weights,index=[x_data.columns])
+    weights = pd.Series(lr.coef_,index=X.columns)
+
+    base = lr.intercept_
 
     #base = lr.intercept_
     """
@@ -44,7 +45,7 @@ def area_plot(request):
     string = base64.b64encode(buffer.read())
     uri = urllib.parse.quote(string)     
     """
-    return render(request, 'mmm.html', {'x':lr.intercept_[0][0]})
+    return render(request, 'mmm.html', {'x':weights})
 
 def imp_features(request):
         uri=imp()

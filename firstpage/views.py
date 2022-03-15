@@ -102,7 +102,7 @@ tuned_model = OptunaSearchCV(
         'adstock__social_media_pipe__carryover__length': IntUniformDistribution(0, 6),
         'adstock__social_media_pipe__saturation__a': UniformDistribution(0, 0.01),
     },
-    n_trials=100,
+    n_trials=10,
     cv=TimeSeriesSplit(),
     random_state=0
 )
@@ -133,15 +133,15 @@ def area_plot(request):
 
     plt.legend()
     plt.show()
-    """
+    
     fig = plt.gcf()
     buffer = BytesIO()
     fig.savefig(buffer, format='png')
     buffer.seek(0)
     string = base64.b64encode(buffer.read())
     uri = urllib.parse.quote(string)     
-    """
-    return render(request, 'mmm.html', {'x':"uri"})
+    
+    return render(request, 'mmm.html', {'x':uri})
 
 def imp_features(request):
         uri=imp()

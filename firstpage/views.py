@@ -30,10 +30,11 @@ def area_plot(request):
     a=df['coef']
     #weights = pd.Series(result.params)
     #z=type(lr.coef_)
+    weight = pd.Series(np.array([2,3,4,5]),index=X.columns)
     base = lr.intercept_
 
     
-    unadj_contributions = x_data.multiply([2,3,4,5]).assign(Base=base)
+    unadj_contributions = x_data.multiply(weight).assign(Base=base)
     """
     adj_contributions = (unadj_contributions.div(unadj_contributions.sum(axis=1), axis=0).mul(y_data, axis=0)) # contains all contributions for each day
     ax = (adj_contributions[['Base', 'cyl', 'disp', 'wt', 'acc']].plot.area(figsize=(16, 10),linewidth=1,title='Predicted Sales and Breakdown',ylabel='Sales',xlabel='Date'))

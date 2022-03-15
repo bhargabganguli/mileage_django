@@ -26,7 +26,7 @@ def area_plot(request):
     x_data,y_data=data()
     lr = LinearRegression()
     lr.fit(x_data, y_data)
-    result = sm.OLS(y, X).fit()
+    result = sm.OLS(y_data, x_data).fit()
     
     weights = pd.Series(result.params)
     z=type(lr.coef_)

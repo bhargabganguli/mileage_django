@@ -5,6 +5,7 @@ import pandas as pd
 import urllib
 import numpy as np
 from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import cross_val_score, TimeSeriesSplit
 # Create your views here.
 
 #this will start first page

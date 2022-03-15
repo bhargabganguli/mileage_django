@@ -69,15 +69,15 @@ adstock = ColumnTransformer(
      ('tv_pipe', Pipeline([
                            ('carryover', ExponentialCarryover()),
                            ('saturation', ExponentialSaturation())
-     ]), ['TV']),
+     ]), ['cyl']),
      ('radio_pipe', Pipeline([
                            ('carryover', ExponentialCarryover()),
                            ('saturation', ExponentialSaturation())
-     ]), ['Radio']),
+     ]), ['disp']),
      ('social_media_pipe', Pipeline([
                            ('carryover', ExponentialCarryover()),
                            ('saturation', ExponentialSaturation())
-     ]), ['Social_Media_1']),
+     ]), ['wt']),
          ],
     remainder='passthrough'
 )
@@ -109,11 +109,11 @@ tuned_model = OptunaSearchCV(
 
 def area_plot(request):
     x_data,y_data=data()
-    
+    tuned_model.fit(x_data.iloc[:,[0,1,2]], y_data)
     value=pd.DataFrame.from_dict(tuned_model.best_params_,orient='index',columns=["value"])
     # applying get_value() function 
     tv_sat_a = value._get_value('adstock__tv_pipe__saturation__a', 'value')
-    tuned_model.fit(x_data, y_data)
+    
     radio_sat_a = value._get_value('adstock__radio_pipe__saturation__a', 'value')
 
     Social_Media_sat_a = value._get_value('adstock__social_media_pipe__saturation__a', 'value')

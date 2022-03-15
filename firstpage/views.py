@@ -26,7 +26,8 @@ def area_plot(request):
     lr = LinearRegression()
     lr.fit(x_data, y_data)
     result = sm.OLS(y_data, x_data).fit()
-    
+    df = pd.read_html(result.summary().tables[1].as_html(),header=0,index_col=0)[0]
+    a=df['coef']
     #weights = pd.Series(result.params)
     #z=type(lr.coef_)
     #base = lr.intercept_
@@ -45,7 +46,7 @@ def area_plot(request):
     string = base64.b64encode(buffer.read())
     uri = urllib.parse.quote(string)     
     """
-    return render(request, 'mmm.html', {'x':x_data})
+    return render(request, 'mmm.html', {'x':a})
 
 def imp_features(request):
         uri=imp()

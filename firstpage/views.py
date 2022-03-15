@@ -27,7 +27,7 @@ def area_plot(request):
     lr.fit(x_data, y_data)
     #result = sm.OLS(y_data, x_data).fit()
     #df = pd.read_html(result.summary().tables[1].as_html(),header=0,index_col=0)[0]
-    weights = pd.Series(lr.coef_,index=X.columns)
+    weights = pd.Series(lr.coef_,index=x_data.columns)
     a=weights.size
     #weights = pd.Series(result.params)
     #z=type(lr.coef_)

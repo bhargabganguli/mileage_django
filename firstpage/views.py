@@ -9,6 +9,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import cross_val_score, TimeSeriesSplit
 # Create your views here.
 
+
 #this will start first page
 from sklearn import pipeline,preprocessing,metrics,model_selection,ensemble
 #from sklearn_pandas import DataFrameMapper

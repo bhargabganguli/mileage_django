@@ -139,8 +139,10 @@ def saturation(request):
     fig.savefig(buffer, format='png')
     buffer.seek(0)
     string = base64.b64encode(buffer.read())
+    
     uri = urllib.parse.quote(string)     
     
+    buffer.close()
     return render(request, 'mmm.html', {'x':uri})
 
 def imp_features(request):

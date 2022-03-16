@@ -136,7 +136,7 @@ def saturation(request):
     
     #fig = plt.gcf()
     buffer = BytesIO()
-    plt.savefig(buffer, format='png')
+    plt.savefig(buffer.write(), format='png')
     buffer.seek(0)
     #string = base64.b64encode(buffer.read())
     image_png = buffer.getvalue()

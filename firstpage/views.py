@@ -134,14 +134,15 @@ def saturation(request):
     plt.legend()
     plt.show()
     
-    fig = plt.gcf()
+    #fig = plt.gcf()
     buffer = BytesIO()
-    fig.savefig(buffer, format='png')
+    plt.savefig(buffer, format='png')
     buffer.seek(0)
-    string = base64.b64encode(buffer.read())
-    
-    uri = urllib.parse.quote(string)     
-    
+    #string = base64.b64encode(buffer.read())
+    image_png = buffer.getvalue()
+    uri = base64.b64encode(image_png)
+    #uri = urllib.parse.quote(string)     
+    uri = uri.decode('utf-8')
     buffer.close()
     return render(request, 'mmm.html', {'x':uri})
 

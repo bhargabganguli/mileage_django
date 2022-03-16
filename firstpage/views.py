@@ -127,9 +127,9 @@ def area_plot(request):
     import matplotlib.pyplot as plt
     from matplotlib.pyplot import figure
 
-    plt.plot(range(0,1100),y_axis_TV, label='TV')
-    plt.plot(range(0,1100),y_axis_radio, label='RADIO')
-    plt.plot(range(0,1100),y_axis_Social_Media, label='Social Media')
+    plt.plot(range(0,1100),y_axis_TV, label='cyl')
+    plt.plot(range(0,1100),y_axis_radio, label='disp')
+    plt.plot(range(0,1100),y_axis_Social_Media, label='wt')
 
     plt.legend()
     plt.show()

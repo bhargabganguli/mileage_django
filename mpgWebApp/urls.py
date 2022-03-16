@@ -31,7 +31,6 @@ urlpatterns = [
     url('barplot',views.barplot,name='PredictMPG'),
     url('imp_features',views.imp_features,name='impfeat'),
     url('saturation',views.saturation,name='saturation'),
-
 ]
 
 urlpatterns += staticfiles_urlpatterns()

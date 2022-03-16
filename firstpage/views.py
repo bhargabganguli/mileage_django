@@ -107,7 +107,7 @@ tuned_model = OptunaSearchCV(
     random_state=0
 )
 
-def area_plot(request):
+def saturation(request):
     x_data,y_data=data()
     tuned_model.fit(x_data.iloc[:,[0,1,2]], y_data)
     value=pd.DataFrame.from_dict(tuned_model.best_params_,orient='index',columns=["value"])

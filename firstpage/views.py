@@ -154,14 +154,19 @@ def saturation(request):
     #uri = urllib.parse.quote(string)     
     uri = uri.decode('utf-8')
     buffer.close()
+    
     return render(request, 'mmm.html', {'x':uri})
 
 def imp_features(request):
-        uri=imp()
-        return render(request, 'mmm.html',{'x':uri})
+    uri=imp()
+    return render(request, 'mmm.html',{'x':uri})
     
 def area_plot(request):
-        return render(request, 'mmm.html',{'x':"uri"})    
+    lr = LinearRegression()
+    x_data,y_data=data()
+    lr.fit(x_data,y_data)
+    uri = print(type(lr.coef_))
+    return render(request, 'mmm.html',{'x':uri})    
     
     
 #this is user defined function to load the csv data into a  dataframe(name=csv) and to upload it in mysql database

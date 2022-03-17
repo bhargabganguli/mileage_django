@@ -168,12 +168,12 @@ def area_plot(request):
     weights = pd.Series(lr.coef_[0],index=x_data.columns)
     base = lr.intercept_[0]
     unadj_contributions = x_data.mul(weights).assign(Base=base)
-    """
+    
     adj_contributions = (unadj_contributions
                      .div(unadj_contributions.sum(axis=1), axis=0)
-                     .mul(y, axis=0)
+                     .mul(y_data, axis=0)
                     ) # contains all contributions for each day
-    ax = (adj_contributions[['Base', 'Social_Media_1', 'Radio', 'TV']].plot.area(
+    ax = (adj_contributions[['Base', 'cyl', 'disp', 'wt']].plot.area(
           figsize=(16, 10),
           linewidth=1,
           title='Predicted Sales and Breakdown',
@@ -186,9 +186,23 @@ def area_plot(request):
         title='Channels', loc="center left",
         bbox_to_anchor=(1.01, 0.5)
     )
-        uri = lr.coef_[0][0]
-    """
-    return render(request, 'mmm.html',{'x':unadj_contributions})    
+       
+    buffer = BytesIO()
+    
+    buffer.flush()
+    
+    
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    
+    #string = base64.b64encode(buffer.read())
+    image_png = buffer.getvalue()
+    uri = base64.b64encode(image_png)
+    #uri = urllib.parse.quote(string)     
+    uri = uri.decode('utf-8')
+    buffer.close()
+    
+    return render(request, 'mmm.html',{'x':uri})    
     
     
 #this is user defined function to load the csv data into a  dataframe(name=csv) and to upload it in mysql database

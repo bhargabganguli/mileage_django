@@ -165,8 +165,30 @@ def area_plot(request):
     lr = LinearRegression()
     x_data,y_data=data()
     lr.fit(x_data,y_data)
-    uri = lr.coef_[0][0]
-    return render(request, 'mmm.html',{'x':uri})    
+    weights = pd.Series(lr.coef_[0],index=x_data.columns)
+    base = lr.intercept_
+    unadj_contributions = newdf1.mul(weights).assign(Base=base)
+    """
+    adj_contributions = (unadj_contributions
+                     .div(unadj_contributions.sum(axis=1), axis=0)
+                     .mul(y, axis=0)
+                    ) # contains all contributions for each day
+    ax = (adj_contributions[['Base', 'Social_Media_1', 'Radio', 'TV']].plot.area(
+          figsize=(16, 10),
+          linewidth=1,
+          title='Predicted Sales and Breakdown',
+          ylabel='Sales',
+          xlabel='Date')
+     )
+    handles, labels = ax.get_legend_handles_labels()
+    ax.legend(
+        handles[::-1], labels[::-1],
+        title='Channels', loc="center left",
+        bbox_to_anchor=(1.01, 0.5)
+    )
+        uri = lr.coef_[0][0]
+    """
+    return render(request, 'mmm.html',{'x':unadj_contributions})    
     
     
 #this is user defined function to load the csv data into a  dataframe(name=csv) and to upload it in mysql database

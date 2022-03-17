@@ -132,7 +132,7 @@ def saturation(request):
     plt.plot(range(0,1100),y_axis_TV, label='cyl')
     plt.plot(range(0,1100),y_axis_radio, label='disp')
     plt.plot(range(0,1100),y_axis_Social_Media, label='wt')
-
+    
     plt.legend()
     plt.show()
     
@@ -142,12 +142,11 @@ def saturation(request):
     buffer = BytesIO()
     
     buffer.flush()
-    """
-    buffer.seek(0)
-    buffer.write(b'')
+    
+    plt.clf()
     plt.savefig(buffer, format='png')
     buffer.seek(0)
-    """
+    
     #string = base64.b64encode(buffer.read())
     image_png = buffer.getvalue()
     uri = base64.b64encode(image_png)

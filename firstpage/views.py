@@ -166,7 +166,7 @@ def area_plot(request):
     x_data,y_data=data()
     lr.fit(x_data,y_data)
     weights = pd.Series(lr.coef_[0],index=x_data.columns)
-    base = lr.intercept_
+    base = lr.intercept_[0]
     unadj_contributions = x_data.mul(weights).assign(Base=base)
     """
     adj_contributions = (unadj_contributions

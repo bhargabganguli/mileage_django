@@ -165,7 +165,7 @@ def area_plot(request):
     lr = LinearRegression()
     x_data,y_data=data()
     lr.fit(x_data,y_data)
-    uri = print(type(x_data))
+    uri = lr.coef_
     return render(request, 'mmm.html',{'x':uri})    
     
     

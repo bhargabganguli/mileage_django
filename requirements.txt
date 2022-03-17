@@ -6,7 +6,7 @@ joblib==1.0.1
 
 matplotlib-inline==0.1.2
 matplotlib
-
+scikit-learn
 
 
 lxml

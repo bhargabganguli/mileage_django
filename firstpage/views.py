@@ -128,7 +128,7 @@ def saturation(request):
 
     import matplotlib.pyplot as plt
     from matplotlib.pyplot import figure
-
+    plt.clf()
     plt.plot(range(0,1100),y_axis_TV, label='cyl')
     plt.plot(range(0,1100),y_axis_radio, label='disp')
     plt.plot(range(0,1100),y_axis_Social_Media, label='wt')
@@ -143,7 +143,7 @@ def saturation(request):
     
     buffer.flush()
     
-    plt.clf()
+    
     plt.savefig(buffer, format='png')
     buffer.seek(0)
     

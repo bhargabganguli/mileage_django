@@ -168,11 +168,16 @@ def area_plot(request):
     weights = pd.Series(lr.coef_[0],index=x_data.columns)
     base = lr.intercept_[0]
     unadj_contributions = x_data.mul(weights).assign(Base=base)
+    adj_contributions = (unadj_contributions
+                     .div(unadj_contributions.sum(axis=1), axis=0)
+                     )
     
+    """
     adj_contributions = (unadj_contributions
                      .div(unadj_contributions.sum(axis=1), axis=0)
                      .mul(y_data, axis=0)
                     ) # contains all contributions for each day
+    """
     ax = (adj_contributions[['Base', 'cyl', 'disp', 'wt']].plot.area(
           figsize=(16, 10),
           linewidth=1,

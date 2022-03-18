@@ -173,7 +173,7 @@ def area_plot(request):
                      )
     
     
-    adj_contributions = adj_contributions.mul(y_data, axis=0)
+    adj_contributions = adj_contributions.mul(np.array(y_data), axis=0)
                     # contains all contributions for each day
     
     ax = (adj_contributions[['Base', 'cyl', 'disp', 'wt']].plot.area(

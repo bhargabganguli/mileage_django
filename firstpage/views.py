@@ -197,7 +197,7 @@ def area_plot(request):
     
     plt.savefig(buffer, format='png')
     buffer.seek(0)
-    
+    plt.clf()
     #string = base64.b64encode(buffer.read())
     image_png = buffer.getvalue()
     uri = base64.b64encode(image_png)

@@ -170,14 +170,12 @@ def area_plot(request):
     unadj_contributions = x_data.mul(weights).assign(Base=base)
     adj_contributions = (unadj_contributions
                      .div(unadj_contributions.sum(axis=1), axis=0)
-                     .mul(y_data, axis=0))
+                     )
     
-    """
-    adj_contributions = (unadj_contributions
-                     .div(unadj_contributions.sum(axis=1), axis=0)
-                     .mul(y_data, axis=0)
-                    ) # contains all contributions for each day
-    """
+    
+    adj_contributions = adj_contribution.mul(y_data, axis=0)
+                    # contains all contributions for each day
+    
     ax = (adj_contributions[['Base', 'cyl', 'disp', 'wt']].plot.area(
           figsize=(16, 10),
           linewidth=1,
@@ -207,7 +205,7 @@ def area_plot(request):
     uri = uri.decode('utf-8')
     buffer.close()
     
-    return render(request, 'mmm.html',{'x':y_data})    
+    return render(request, 'mmm.html',{'x':adj_contributions})    
     
     
 #this is user defined function to load the csv data into a  dataframe(name=csv) and to upload it in mysql database

@@ -226,7 +226,7 @@ def result(request):
         from sklearn.metrics import mean_absolute_error as mae
         global data
         def data(x_data=X,y_data=y):
-            return(x_data,y_data)
+            return(x_data,pd.DataFrame(y_data))
         
         global imp
         def imp(x_data=X,y_data=y):

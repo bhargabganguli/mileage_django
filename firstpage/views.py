@@ -205,7 +205,7 @@ def area_plot(request):
     uri = uri.decode('utf-8')
     buffer.close()
     
-    return render(request, 'mmm.html',{'x':adj_contributions})    
+    return render(request, 'mmm.html',{'x':uri})    
     
     
 #this is user defined function to load the csv data into a  dataframe(name=csv) and to upload it in mysql database

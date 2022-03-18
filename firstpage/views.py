@@ -170,7 +170,7 @@ def area_plot(request):
     unadj_contributions = x_data.mul(weights).assign(Base=base)
     adj_contributions = (unadj_contributions
                      .div(unadj_contributions.sum(axis=1), axis=0)
-                     )
+                     .mul(y_data[0], axis=0))
     
     """
     adj_contributions = (unadj_contributions

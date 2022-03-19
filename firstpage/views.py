@@ -72,15 +72,15 @@ adstock = ColumnTransformer(
      ('tv_pipe', Pipeline([
                            ('carryover', ExponentialCarryover()),
                            ('saturation', ExponentialSaturation())
-     ]), ['TV']),
+     ]), [x_data.columns)[0]]),
      ('radio_pipe', Pipeline([
                            ('carryover', ExponentialCarryover()),
                            ('saturation', ExponentialSaturation())
-     ]), ['Radio']),
+     ]), [x_data.columns)[1]]),
      ('social_media_pipe', Pipeline([
                            ('carryover', ExponentialCarryover()),
                            ('saturation', ExponentialSaturation())
-     ]), ['Social_Media']),
+     ]), [x_data.columns)[2]]),
          ],
     remainder='passthrough'
 )
@@ -313,21 +313,23 @@ def upload(request):
 
 
 def viewdb(request):
+    x_data,y_data=data()
+    
     return render(request, 'index.html')
 
 def predictMPG(request):
     if request.method == 'POST':
         temp={}
-        temp['cyl']=request.POST.get('cylinderVal')
-        temp['disp']=request.POST.get('dispVal')
-        #temp['hp']=request.POST.get('hrsPwrVal')
-        temp['wt']=request.POST.get('weightVal')
-        #temp['acc']=request.POST.get('accVal')
-        #temp['modyr']=request.POST.get('modelVal')
-        #temp['origin']=request.POST.get('originVal')
+        temp['tv']=request.POST.get('tv_val')
+        temp['radio']=request.POST.get('radio_val')
+        temp['social_media']=request.POST.get('social_media_tv')
 
+    x_data,y_data=data()    
     testDtaa = pd.DataFrame({'x':temp}).transpose()
-    scoreval = regression(testDtaa)
+    tuned_model.fit(x_data.iloc[:,[0,1,2]], y_data)
+    scoreval = tuned_model.predict(testDtaa)
+    
+    #scoreval = regression(testDtaa)
     context={'scoreval':scoreval,'summary':"reg summary"}
     
     

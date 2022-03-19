@@ -205,7 +205,53 @@ def area_plot(request):
     uri = uri.decode('utf-8')
     buffer.close()
     
-    return render(request, 'mmm.html',{'x':uri})    
+    # TUNED AREA PLOT
+    adstock_data = pd.DataFrame(
+    tuned_model.best_estimator_.named_steps['adstock'].transform(x_data),
+    columns=x_data.columns,
+    index=x_data.index
+    )
+    weights = pd.Series(
+        tuned_model.best_estimator_.named_steps['regression'].coef_[0],
+        index=x_data.columns
+    )
+    base = tuned_model.best_estimator_.named_steps['regression'].intercept_
+    unadj_contributions = adstock_data.mul(weights).assign(Base=base[0])
+    adj_contributions = (unadj_contributions
+                     .div(unadj_contributions.sum(axis=1), axis=0)
+                     .mul(np.array(y_data), axis=0)
+                    )
+    ax = (adj_contributions[['Base', 'Social_Media', 'Radio', 'TV']]
+        .plot.area(
+          figsize=(16, 10),
+          linewidth=1,
+          title='Predicted Sales and Breakdown',
+          ylabel='Sales',
+          xlabel='Date'
+      )
+     )
+    
+    handles, labels = ax.get_legend_handles_labels()
+    ax.legend(
+        handles[::-1], labels[::-1],
+        title='Channels', loc="center left",
+        bbox_to_anchor=(1.01, 0.5)
+    )
+    buffer = BytesIO()
+    
+    buffer.flush()
+    
+    
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    plt.clf()
+    #string = base64.b64encode(buffer.read())
+    image_png = buffer.getvalue()
+    uri2 = base64.b64encode(image_png)
+    #uri = urllib.parse.quote(string)     
+    uri2 = uri2.decode('utf-8')
+    buffer.close()    
+    return render(request, 'mmm.html',{'x':uri,'y':uri2})    
     
     
 #this is user defined function to load the csv data into a  dataframe(name=csv)

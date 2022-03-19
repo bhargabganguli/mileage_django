@@ -275,7 +275,7 @@ def predictMPG(request):
         temp['disp']=request.POST.get('dispVal')
         #temp['hp']=request.POST.get('hrsPwrVal')
         temp['wt']=request.POST.get('weightVal')
-        temp['acc']=request.POST.get('accVal')
+        #temp['acc']=request.POST.get('accVal')
         #temp['modyr']=request.POST.get('modelVal')
         #temp['origin']=request.POST.get('originVal')
 

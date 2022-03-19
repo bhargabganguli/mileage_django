@@ -72,15 +72,15 @@ adstock = ColumnTransformer(
      ('tv_pipe', Pipeline([
                            ('carryover', ExponentialCarryover()),
                            ('saturation', ExponentialSaturation())
-     ]), [x_data.columns)[0]]),
+     ]), [list(x_data.columns)[0]]),
      ('radio_pipe', Pipeline([
                            ('carryover', ExponentialCarryover()),
                            ('saturation', ExponentialSaturation())
-     ]), [x_data.columns)[1]]),
+     ]), [list(x_data.columns)[1]]),
      ('social_media_pipe', Pipeline([
                            ('carryover', ExponentialCarryover()),
                            ('saturation', ExponentialSaturation())
-     ]), [x_data.columns)[2]]),
+     ]), [list(x_data.columns)[2]]),
          ],
     remainder='passthrough'
 )

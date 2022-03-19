@@ -208,17 +208,15 @@ def area_plot(request):
     return render(request, 'mmm.html',{'x':uri})    
     
     
-#this is user defined function to load the csv data into a  dataframe(name=csv) and to upload it in mysql database
+#this is user defined function to load the csv data into a  dataframe(name=csv)
 def result(request):
     
     if request.method == "POST":
         file = request.FILES["myFile"]
         csv=pd.read_csv(file)
       
-        arr=csv["cyl"]
-        sumation={'x':"sum value"}
-        y=csv.iloc[:,[0]]
-        X=csv.iloc[:,[1,2,4,5]]
+        y=csv.iloc[:,[4]]
+        X=csv.iloc[:,[1,2,3]]
         from sklearn.linear_model import LinearRegression
         
         from sklearn.ensemble import RandomForestRegressor

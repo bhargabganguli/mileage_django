@@ -132,7 +132,7 @@ def saturation(request):
     plt.clf()
     plt.plot(range(0,1100),y_axis_TV, label=list(x_data.columns)[0])
     plt.plot(range(0,1100),y_axis_radio, label=list(x_data.columns)[1])
-    plt.plot(range(0,1100),y_axis_Social_Media, label='list(x_data.columns)[2])
+    plt.plot(range(0,1100),y_axis_Social_Media, label=list(x_data.columns)[2])
     
     plt.legend()
     plt.show()

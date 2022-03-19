@@ -121,22 +121,22 @@ class ExponentialCarryover(BaseEstimator, TransformerMixin):
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LinearRegression
-x_data,y_data=data()
+#x_data,y_data=data()
 
 adstock = ColumnTransformer(
     [
      ('tv_pipe', Pipeline([
                            ('carryover', ExponentialCarryover()),
                            ('saturation', ExponentialSaturation())
-     ]), [list(x_data.columns)[0]]),
+     ]), ['TV']),
      ('radio_pipe', Pipeline([
                            ('carryover', ExponentialCarryover()),
                            ('saturation', ExponentialSaturation())
-     ]), [list(x_data.columns)[1]]),
+     ]), ['Radio']),
      ('social_media_pipe', Pipeline([
                            ('carryover', ExponentialCarryover()),
                            ('saturation', ExponentialSaturation())
-     ]), [list(x_data.columns)[2]]),
+     ]), ['Social_Media']),
          ],
     remainder='passthrough'
 )

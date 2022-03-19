@@ -18,11 +18,16 @@
         input {text-align: center;}
     </style>
 <center>
+{% if y %}
 <h1>Contribution of each advertisement to sales</h1>
+{% endif %}
+
+
 <img src="data:image/png;base64, {{x|safe}}", height="600", width="800">
 
-<h1>Contribution of each advertisement to sales with saturation and carryover effect</h1>
+
 {% if y %}
+    <h1>Contribution of each advertisement to sales with saturation and carryover effect</h1>
 <img src="data:image/png;base64, {{y|safe}}", height="600", width="800">
 {% endif %}
     

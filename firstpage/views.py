@@ -67,6 +67,8 @@ class ExponentialCarryover(BaseEstimator, TransformerMixin):
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LinearRegression
+x_data,y_data=data()
+
 adstock = ColumnTransformer(
     [
      ('tv_pipe', Pipeline([

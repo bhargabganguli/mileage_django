@@ -42,19 +42,23 @@
     <img src="data:image/png;base64, {{x|safe}}">
 
 
-    <form action="/upload">
-    <input type="submit" value="upload csv file" style="height:70px; width:120px">
+    <form method="post" enctype="multipart/form-data" action="/upload">
+        {% csrf_token %}
+    <input type="submit" value="upload csv file" style="height:70px; width:200px">
     </form>
     {% if imp %}
-    <form action="/imp_features">
-    <input type="submit" value="check important factors" style="height:70px; width:120px">
+    <form method="post" enctype="multipart/form-data" action="/imp_features">
+        {% csrf_token %}
+    <input type="submit" value="check important factors" style="height:70px; width:200px">
     </form>
         
-    <form action="/saturation">
+    <form method="post" enctype="multipart/form-data" action="/saturation">
+        {% csrf_token %}
     <input type="submit" value="saturation" style="height:70px; width:120px">
     </form>
         
-    <form action="/area_plot">
+    <form method="post" enctype="multipart/form-data" action="/area_plot">
+        {% csrf_token %}
     <input type="submit" value="area_plot" style="height:70px; width:120px">
     </form>
     {% endif %}
@@ -71,13 +75,9 @@
     <form method="post" enctype="multipart/form-data" action="predictMPG">
  {% csrf_token %}
  <div>
- <div class="col-md-4 col-sm-4"><label for="fname">Cylinders:</label> </div> <input name="cylinderVal" type="text" value=1><br><br>
- <div class="col-md-4 col-sm-4"><label for="lname">Displacement(km):</label> </div> <input type="text" id="lname" name="dispVal" value=1><br><br>
- <!--<div class="col-md-4 col-sm-4"><label for="lname">horsepower:</label> </div> <input type="text" id="fname" name="hrsPwrValue" value=1><br><br> -->
- <div class="col-md-4 col-sm-4"><label for="lname">weight(kg):</label> </div> <input type="text" id="lname" name="weightVal" value=1><br><br>
- <div class="col-md-4 col-sm-4"><label for="lname">acceleration(m/sec^2):</label> </div> <input type="text" id="fname" name="accVal" value=1><br><br>
- <div class="col-md-4 col-sm-4"><label for="lname">modelyr:</label> </div> <input type="text" id="lname" name="modelVal" value=1><br><br>
- <div class="col-md-4 col-sm-4"><label for="lname">origin(1:USA,2:JAPAN,3:OTHERS):</label> </div> <input type="text" id="lname" name="originVal" value=1><br><br>
+ <div class="col-md-4 col-sm-4"><label for="fname">TV spending:</label> </div> <input name="cylinderVal" type="text" value=1><br><br>
+ <div class="col-md-4 col-sm-4"><label for="lname">Radio spending:</label> </div> <input type="text" id="lname" name="dispVal" value=1><br><br>
+ <div class="col-md-4 col-sm-4"><label for="lname">Social Media spending:</label> </div> <input type="text" id="lname" name="weightVal" value=1><br><br>
 <br>
 <input type="submit" value="submit" ></div>
 </div>

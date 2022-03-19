@@ -105,7 +105,7 @@ tuned_model = OptunaSearchCV(
         'adstock__social_media_pipe__carryover__length': IntUniformDistribution(0, 6),
         'adstock__social_media_pipe__saturation__a': UniformDistribution(0, 0.01),
     },
-    n_trials=10,
+    n_trials=100,
     cv=TimeSeriesSplit(),
     random_state=0
 )

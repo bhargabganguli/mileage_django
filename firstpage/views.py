@@ -72,15 +72,15 @@ adstock = ColumnTransformer(
      ('tv_pipe', Pipeline([
                            ('carryover', ExponentialCarryover()),
                            ('saturation', ExponentialSaturation())
-     ]), ['cyl']),
+     ]), ['TV']),
      ('radio_pipe', Pipeline([
                            ('carryover', ExponentialCarryover()),
                            ('saturation', ExponentialSaturation())
-     ]), ['disp']),
+     ]), ['Radio']),
      ('social_media_pipe', Pipeline([
                            ('carryover', ExponentialCarryover()),
                            ('saturation', ExponentialSaturation())
-     ]), ['wt']),
+     ]), ['Social_Media']),
          ],
     remainder='passthrough'
 )
@@ -176,7 +176,7 @@ def area_plot(request):
     adj_contributions = adj_contributions.mul(np.array(y_data), axis=0)
                     # contains all contributions for each day
     
-    ax = (adj_contributions[['Base', 'cyl', 'disp', 'wt']].plot.area(
+    ax = (adj_contributions[['Base', 'TV', 'Radio', 'Social_Media']].plot.area(
           figsize=(16, 10),
           linewidth=1,
           title='Predicted Sales and Breakdown',

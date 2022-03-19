@@ -206,6 +206,7 @@ def area_plot(request):
     buffer.close()
     
     # TUNED AREA PLOT
+    tuned_model.fit(x_data.iloc[:,[0,1,2]], y_data)
     adstock_data = pd.DataFrame(
     tuned_model.best_estimator_.named_steps['adstock'].transform(x_data),
     columns=x_data.columns,

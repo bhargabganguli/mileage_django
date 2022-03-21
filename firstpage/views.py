@@ -363,17 +363,17 @@ def optimise(request):
 
     # Constraints
     ## On Tv
-    TV_non_neg = m.add_constraint(TV > 0)
+    TV_non_neg = m.add_constraint(TV >= 1)
 
     ## On SM
     #SM_Min = m.add_constraint(SM >= 100)
     SM_Max = m.add_constraint(SM <= 250)
-    SM_non_neg = m.add_constraint(SM > 0)
+    SM_non_neg = m.add_constraint(SM >= 1)
 
     ## On Radio
     #Radio_Min = m.add_constraint(Radio >= 120)
     Radio_Max = m.add_constraint(Radio <= 400)
-    Radio_non_neg = m.add_constraint(Radio > 0)
+    Radio_non_neg = m.add_constraint(Radio >= 1)
 
     # Constraints on Total ad spend
     Total_budget_max = m.add_constraint(m.sum([TV + Radio + SM]) <= request.POST.get('budget'))

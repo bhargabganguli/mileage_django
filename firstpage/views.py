@@ -352,3 +352,39 @@ def barplot(request):
     
     return render(request, 'result.html',context)
 
+def optimise(request):
+    from docplex.mp.model import Model 
+    m = Model(name='Optimization_for_MMM')
+
+    # Variables
+    TV = m.integer_var(name='TV')
+    Radio = m.integer_var(name='Radio')
+    SM = m.integer_var(name='Social_Media')
+
+    # Constraints
+    ## On Tv
+    TV_non_neg = m.add_constraint(TV > 0)
+
+    ## On SM
+    #SM_Min = m.add_constraint(SM >= 100)
+    SM_Max = m.add_constraint(SM <= 250)
+    SM_non_neg = m.add_constraint(SM > 0)
+
+    ## On Radio
+    #Radio_Min = m.add_constraint(Radio >= 120)
+    Radio_Max = m.add_constraint(Radio <= 400)
+    Radio_non_neg = m.add_constraint(Radio > 0)
+
+    # Constraints on Total ad spend
+    Total_budget_max = m.add_constraint(m.sum([TV + Radio + SM]) <= request.POST.get('budget'))
+
+    # Coefficient
+    TV_coef = 3.49
+    Radio_coef = 0.91
+    SM_coef = 2.3
+    intercept = 84.68
+
+    # Optimized Budget
+    m.maximize(TV*TV_coef + Radio*Radio_coef + SM*SM_coef + intercept)
+    sol = m.solve()
+    return render(request, 'result.html', {'scoreval':sol.display(), 'x':True})

@@ -387,4 +387,6 @@ def optimise(request):
     # Optimized Budget
     m.maximize(TV*TV_coef + Radio*Radio_coef + SM*SM_coef + intercept)
     sol = m.solve()
-    return render(request, 'result.html', {'scoreval':True, 'summary':sol.get_value()})
+    data = sol.get_value(v) for v in m.iter_variables()
+    frame = pd.DataFrame(data)
+    return render(request, 'result.html', {'scoreval':True, 'summary':frame})

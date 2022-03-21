@@ -376,7 +376,7 @@ def optimise(request):
     Radio_non_neg = m.add_constraint(Radio >= 1)
 
     # Constraints on Total ad spend
-    Total_budget_max = m.add_constraint(m.sum([TV + Radio + SM]) <= request.POST.get('budget'))
+    Total_budget_max = m.add_constraint(m.sum([TV + Radio + SM]) <= int(request.POST.get('budget')))
 
     # Coefficient
     TV_coef = 3.49

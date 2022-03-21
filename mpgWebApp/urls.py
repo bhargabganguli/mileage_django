@@ -32,7 +32,7 @@ urlpatterns = [
     url('imp_features',views.imp_features,name='impfeat'),
     url('saturation',views.saturation,name='saturation'),
     url('area_plot',views.area_plot,name='area_plot'),
-
+    url('optimise',views.optimise,name='optimise'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

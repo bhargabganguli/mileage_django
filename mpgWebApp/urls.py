@@ -35,4 +35,5 @@ urlpatterns = [
     url('optimise',views.optimise,name='optimise'),
 ]
 
+
 urlpatterns += staticfiles_urlpatterns()

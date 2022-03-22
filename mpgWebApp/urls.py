@@ -33,6 +33,7 @@ urlpatterns = [
     url('saturation',views.saturation,name='saturation'),
     url('area_plot',views.area_plot,name='area_plot'),
     url('optimise',views.optimise,name='optimise'),
+    url('carry',views.carry,name='carryover'),
 ]
 
 

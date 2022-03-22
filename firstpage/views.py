@@ -392,4 +392,4 @@ def optimise(request):
         data.append(sol.get_value(v)) 
     #data = m.iter_variables()
     frame = pd.DataFrame(data)
-    return render(request, 'result.html', {'scoreval':True, 'summary':frame})
+    return render(request, 'result.html', {'scoreval':True, 'summary':data})

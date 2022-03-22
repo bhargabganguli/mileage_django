@@ -61,6 +61,7 @@ def result(request):
             #feat_importances.nlargest(25).plot(kind='barh',figsize=(10,10))
             #feat_importances_plot = pd.DataFrame(feat_importances).plot(kind = 'barh')
             fig = plt.gcf()
+            plt.clf()
             buffer = BytesIO()
             fig.savefig(buffer, format='png')
             buffer.seek(0)
@@ -324,6 +325,7 @@ def viewdb(request):
     return render(request, 'index.html')
 
 def predictMPG(request):
+    """
     if request.method == 'POST':
         temp={}
         temp['tv']=request.POST.get('tv_val')
@@ -336,8 +338,8 @@ def predictMPG(request):
     scoreval = tuned_model.predict(testDtaa)
     
     #scoreval = regression(testDtaa)
-    context={'scoreval':scoreval,'summary':"reg summary"}
-    
+    """
+    context={'scoreval':"scoreval",'summary':"reg summary"}
     
     return render(request, 'result.html',context)
 
@@ -351,6 +353,74 @@ def barplot(request):
     context={'something2':True , 'graph2':"barplot"}
     
     return render(request, 'result.html',context)
+
+def carry(request):
+    tv_carry_week = int(value._get_value('adstock__tv_pipe__carryover__length', 'value'))
+    w=100
+    tv_carry_strength = value._get_value('adstock__tv_pipe__carryover__strength', 'value')
+    val={0:100}
+    for i in range(1,tv_carry_week+1):
+        val[i] = w*tv_carry_strength
+        w=w*tv_carry_strength
+
+    week_no = list(val.keys())
+    values = list(val.values())
+    plt.bar(week_no, values)
+    
+    buffer = BytesIO()
+    buffer.flush()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    plt.clf()
+    image_png = buffer.getvalue()
+    uri = base64.b64encode(image_png)   
+    uri = uri.decode('utf-8')
+    buffer.close()
+    
+    radio_carry_week = int(value._get_value('adstock__radio_pipe__carryover__length', 'value'))
+    w=100
+    val2={0:100}
+    radio_carry_strength = value._get_value('adstock__radio_pipe__carryover__strength', 'value')
+    for i in range(1,radio_carry_week+1):
+        val2[i] = w*radio_carry_strength
+        w=w*radio_carry_strength
+    week_no = list(val2.keys())
+    values = list(val2.values())
+    plt.bar(week_no, values)
+    
+    buffer = BytesIO()
+    buffer.flush()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    plt.clf()
+    image_png = buffer.getvalue()
+    uri2 = base64.b64encode(image_png)   
+    uri2 = uri2.decode('utf-8')
+    buffer.close()
+    
+    Social_Media_carry_week = int(value._get_value('adstock__Social_Media_pipe__carryover__length', 'value'))
+    #Social_Media_carry_week = 4
+    w=100
+    Social_Media_carry_strength = value._get_value('adstock__Social_Media_pipe__carryover__strength', 'value')
+    val3={0:100}
+    for i in range(1,Social_Media_carry_week+1):
+        val3[i] = w*Social_Media_carry_strength
+        w=w*Social_Media_carry_strength
+    week_no = list(val3.keys())
+    values = list(val3.values())
+    plt.bar(week_no, values)
+     
+    buffer = BytesIO()
+    buffer.flush()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    plt.clf()
+    image_png = buffer.getvalue()
+    uri3 = base64.b64encode(image_png)   
+    uri3 = uri3.decode('utf-8')
+    buffer.close()
+
+   return render(request, 'mmm.html',{'x':uri,'y':uri2,'z':uri3,'carry':True})  
 
 def optimise(request):
     from docplex.mp.model import Model 

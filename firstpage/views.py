@@ -380,8 +380,8 @@ def optimise(request):
 
     # Coefficient
     TV_coef = 1
-    Radio_coef = 1
-    SM_coef = 1
+    Radio_coef = 2
+    SM_coef = 3
     intercept = 84.68
 
     # Optimized Budget

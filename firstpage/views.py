@@ -379,9 +379,9 @@ def optimise(request):
     Total_budget_max = m.add_constraint(m.sum([TV + Radio + SM]) <= int(request.POST.get('budget')))
 
     # Coefficient
-    TV_coef = 3.49
-    Radio_coef = 0.91
-    SM_coef = 2.3
+    TV_coef = 1
+    Radio_coef = 1
+    SM_coef = 1
     intercept = 84.68
 
     # Optimized Budget
@@ -392,4 +392,4 @@ def optimise(request):
         data.append(sol.get_value(v)) 
     #data = m.iter_variables()
     frame = pd.DataFrame(data)
-    return render(request, 'result.html', {'scoreval':True, 'summary':frame.iloc[:,[1]]})
+    return render(request, 'result.html', {'scoreval':True, 'summary':frame})

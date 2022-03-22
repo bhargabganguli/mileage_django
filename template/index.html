@@ -55,6 +55,11 @@
         {% csrf_token %}
     <input type="submit" value="saturation" style="height:70px; width:120px">
     </form>
+     
+    <form method="post" enctype="multipart/form-data" action="/carry">
+        {% csrf_token %}
+    <input type="submit" value="carryover" style="height:70px; width:120px">
+    </form>    
         
     <form method="post" enctype="multipart/form-data" action="/area_plot">
         {% csrf_token %}
@@ -74,10 +79,12 @@
     <form method="post" enctype="multipart/form-data" action="predictMPG">
  {% csrf_token %}
  <div>
+ <!--
  <div class="col-md-4 col-sm-4"><label for="fname">TV spending:</label> </div> <input name="tv_val" type="text" value=1><br><br>
  <div class="col-md-4 col-sm-4"><label for="lname">Radio spending:</label> </div> <input type="text" id="lname" name="radio_val" value=1><br><br>
  <div class="col-md-4 col-sm-4"><label for="lname">Social Media spending:</label> </div> <input type="text" id="lname" name="social_media_val" value=1><br><br>
 <br>
+-->
 <input type="submit" value="submit" ></div>
 </div>
 </form>

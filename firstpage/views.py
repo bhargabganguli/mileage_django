@@ -355,6 +355,8 @@ def barplot(request):
     return render(request, 'result.html',context)
 
 def carry(request):
+    x_data,y_data=data()    
+    tuned_model.fit(x_data.iloc[:,[0,1,2]], y_data)
     tv_carry_week = int(value._get_value('adstock__tv_pipe__carryover__length', 'value'))
     w=100
     tv_carry_strength = value._get_value('adstock__tv_pipe__carryover__strength', 'value')

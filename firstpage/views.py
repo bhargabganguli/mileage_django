@@ -422,7 +422,7 @@ def carry(request):
     uri3 = uri3.decode('utf-8')
     buffer.close()
     """
-    return render(request, 'mmm.html',{'x':uri,'y':uri2,'z':"uri3",'carry':True})  
+    return render(request, 'mmm.html',{'x':uri,'y':uri2,'z':value,'carry':True})  
 
 def optimise(request):
     from docplex.mp.model import Model 

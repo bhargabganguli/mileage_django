@@ -400,10 +400,10 @@ def carry(request):
     uri2 = uri2.decode('utf-8')
     buffer.close()
     
-    Social_Media_carry_week = int(value._get_value('adstock__Social_Media_pipe__carryover__length', 'value'))
+    Social_Media_carry_week = int(value._get_value('adstock__social_media_pipe__carryover__length', 'value'))
     #Social_Media_carry_week = 4
     w=100
-    Social_Media_carry_strength = value._get_value('adstock__Social_Media_pipe__carryover__strength', 'value')
+    Social_Media_carry_strength = value._get_value('adstock__social_media_pipe__carryover__strength', 'value')
     val3={0:100}
     for i in range(1,Social_Media_carry_week+1):
         val3[i] = w*Social_Media_carry_strength

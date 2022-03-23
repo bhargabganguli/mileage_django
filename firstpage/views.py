@@ -399,7 +399,7 @@ def carry(request):
     uri2 = base64.b64encode(image_png)   
     uri2 = uri2.decode('utf-8')
     buffer.close()
-    """
+    
     Social_Media_carry_week = int(value._get_value('adstock__Social_Media_pipe__carryover__length', 'value'))
     #Social_Media_carry_week = 4
     w=100
@@ -421,7 +421,7 @@ def carry(request):
     uri3 = base64.b64encode(image_png)   
     uri3 = uri3.decode('utf-8')
     buffer.close()
-    """
+    
     return render(request, 'mmm.html',{'x':uri,'y':uri2,'z':value,'carry':True})  
 
 def optimise(request):

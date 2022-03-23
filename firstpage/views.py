@@ -60,10 +60,11 @@ def result(request):
             #feat_importances.nlargest(25).plot(kind='barh',figsize=(10,10))
             #feat_importances_plot = pd.DataFrame(feat_importances).plot(kind = 'barh')
             fig = plt.gcf()
-            plt.clf()
+            
             buffer = BytesIO()
             fig.savefig(buffer, format='png')
             buffer.seek(0)
+            plt.clf()
             string = base64.b64encode(buffer.read())
             uri = urllib.parse.quote(string) 
             return uri

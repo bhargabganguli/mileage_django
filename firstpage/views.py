@@ -33,10 +33,10 @@ def result(request):
     
     if request.method == "POST":
         file = request.FILES["myFile"]
-        csv=pd.read_csv(file,index_col='Date')
+        csv=pd.read_csv(file)
         size=csv.shape
-        y=csv.iloc[:,[3]]
-        X=csv.iloc[:,[0,1,2]]
+        y=csv.iloc[:,[4]]
+        X=csv.iloc[:,[1,2,3]]
         from sklearn.linear_model import LinearRegression
         
         from sklearn.ensemble import RandomForestRegressor
@@ -76,7 +76,7 @@ def result(request):
             pred = pipeline_obj.predict(x_pred)
             return pred
         
-        return render(request, "index.html",{"something":2 , 'x':X, 'imp':True})
+        return render(request, "index.html",{"something":2 , 'x':size, 'imp':True})
     else:
         reg_fit = 5        
         return render(request, "index.html")

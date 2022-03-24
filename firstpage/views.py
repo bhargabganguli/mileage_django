@@ -38,7 +38,7 @@ def result(request):
         request.session['csv'] = csv
         size=csv.shape
         request.session['y'] = csv.iloc[:,[4]]
-        request.session['x'] = csv.iloc[:,[1,2,3]])
+        request.session['x'] = csv.iloc[:,[1,2,3]]
         from sklearn.linear_model import LinearRegression
         
         from sklearn.ensemble import RandomForestRegressor

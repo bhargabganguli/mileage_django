@@ -34,9 +34,11 @@ def result(request):
     if request.method == "POST":
         file = request.FILES["myFile"]
         csv=pd.read_csv(file)
-        size=csv.shape
-        y=csv.iloc[:,[4]]
-        X=csv.iloc[:,[1,2,3]]
+        request.session['csv'] = csv
+        csv2 = request.session['csv']
+        size=csv2.shape
+        y=csv2.iloc[:,[4]]
+        X=csv2.iloc[:,[1,2,3]]
         from sklearn.linear_model import LinearRegression
         
         from sklearn.ensemble import RandomForestRegressor

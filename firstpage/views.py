@@ -35,17 +35,17 @@ def result(request):
         file = request.FILES["myFile"]
         csv=pd.read_csv(file)
         #csv2 = request.session.get('csv',csv)
-        #csv2 = request.session['csv']
+        request.session['csv'] = csv
         size=csv.shape
-        y=request.session.get('y',csv.iloc[:,[4]])
-        X=request.session.get('x',csv.iloc[:,[1,2,3]])
+        request.session['y'] = csv.iloc[:,[4]]
+        request.session['x'] = csv.iloc[:,[1,2,3]])
         from sklearn.linear_model import LinearRegression
         
         from sklearn.ensemble import RandomForestRegressor
         from sklearn.model_selection import train_test_split
         from sklearn.metrics import mean_absolute_error as mae
         global data
-        def data(x_data=X,y_data=y):
+        def data(x_data=request.session.get('x'),y_data=request.session.get('y')):
             return(x_data,pd.DataFrame(y_data))
         
         global imp
@@ -468,4 +468,4 @@ def optimise(request):
         data2.append(sol.get_value(v)) 
     #data2 = m.iter_variables()
     frame = pd.DataFrame(data2)
-    return render(request, 'result.html', {'scoreval':x_data.shape, 'summary':data})
+    return render(request, 'result.html', {'scoreval':x_data.shape, 'summary':data2})

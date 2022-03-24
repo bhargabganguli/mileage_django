@@ -33,7 +33,7 @@ def result(request):
     
     if request.method == "POST":
         file = request.FILES["myFile"]
-        csv=pd.read_csv(file, index_col="Date")
+        csv=pd.read_csv(file)
         #csv2 = request.session.get('csv',csv)
         #request.session['csv'] = csv
         size=csv.shape
@@ -45,8 +45,8 @@ def result(request):
         #del request.session['x']
         from sklearn.linear_model import LinearRegression
         
-        y = csv.iloc[:,[3]]
-        X = csv.iloc[:,[0,1,2]]
+        y = csv.iloc[:,[4]]
+        X = csv.iloc[:,[1,2,3]]
 
         #X = request.session.get('x')
         #y = request.session.get('y')

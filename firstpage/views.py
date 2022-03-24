@@ -33,7 +33,7 @@ def result(request):
     
     if request.method == "POST":
         file = request.FILES["myFile"]
-        csv=pd.read_csv(file, index_col["Date"])
+        csv=pd.read_csv(file, index_col="Date")
         #csv2 = request.session.get('csv',csv)
         #request.session['csv'] = csv
         size=csv.shape

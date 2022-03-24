@@ -428,6 +428,7 @@ def carry(request):
     return render(request, 'mmm.html',{'x':uri,'y':uri2,'z':uri3,'carry':True})  
 
 def optimise(request):
+    x_data,y_data=data()
     from docplex.mp.model import Model 
     m = Model(name='Optimization_for_MMM')
 
@@ -467,4 +468,4 @@ def optimise(request):
         data.append(sol.get_value(v)) 
     #data = m.iter_variables()
     frame = pd.DataFrame(data)
-    return render(request, 'result.html', {'scoreval':True, 'summary':data})
+    return render(request, 'result.html', {'scoreval':x_data.shape, 'summary':data})

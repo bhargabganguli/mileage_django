@@ -40,16 +40,17 @@ def result(request):
         request.session['y'] = csv.iloc[:,[4]]
         request.session['x'] = csv.iloc[:,[1,2,3]]
         from sklearn.linear_model import LinearRegression
-        
+        X = request.session.get('x')
+        y = request.session.get('y')
         from sklearn.ensemble import RandomForestRegressor
         from sklearn.model_selection import train_test_split
         from sklearn.metrics import mean_absolute_error as mae
         global data
-        def data(x_data=request.session.get('x'),y_data=request.session.get('y')):
+        def data(x_data=X,y_data=y):
             return(x_data,pd.DataFrame(y_data))
         
         global imp
-        def imp(x_data=request.session.get('x'),y_data=request.session.get('y')):
+        def imp(x_data=X,y_data=y):
             X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.25,random_state=0)
             model = RandomForestRegressor(random_state=1)
             model.fit(X_train, y_train)
@@ -73,7 +74,7 @@ def result(request):
 
         
         global regression
-        def regression(x_pred,x_data=request.session.get('x'),y_data=request.session.get('y')):
+        def regression(x_pred,x_data=X,y_data=y):
             pipeline_obj=pipeline.Pipeline([("model",LinearRegression())])
             pipeline_obj.fit(x_data,y_data)
             pred = pipeline_obj.predict(x_pred)

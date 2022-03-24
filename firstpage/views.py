@@ -39,8 +39,8 @@ def result(request):
         size=csv.shape
         
         #request.session['y'] = csv.iloc[:,[3]]
-        request.session['x'] = csv.iloc[:,[0,1,2]]
-        del request.session['x']
+        #request.session['x'] = csv.iloc[:,[0,1,2]]
+        #del request.session['x']
         #del request.session['y']
         #del request.session['x']
         from sklearn.linear_model import LinearRegression
@@ -438,9 +438,9 @@ def carry(request):
 
 def optimise(request):
     #x_data,y_data=data()
-    x_data = request.session.get('x')
-    del request.session['y']
-    del request.session['x']
+    #x_data = request.session.get('x')
+    #del request.session['y']
+    #del request.session['x']
     from docplex.mp.model import Model 
     m = Model(name='Optimization_for_MMM')
 

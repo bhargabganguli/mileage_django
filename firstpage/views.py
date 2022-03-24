@@ -438,6 +438,8 @@ def carry(request):
 def optimise(request):
     #x_data,y_data=data()
     x_data = request.session.get('x')
+    del request.session['y']
+    del request.session['x']
     from docplex.mp.model import Model 
     m = Model(name='Optimization_for_MMM')
 

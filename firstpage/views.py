@@ -36,7 +36,7 @@ def result(request):
         csv=pd.read_csv(file)
         #csv2 = request.session.get('csv',csv)
         #csv2 = request.session['csv']
-        size=csv2.shape
+        size=csv.shape
         y=request.session.get('y',csv.iloc[:,[4]])
         X=request.session.get('x',csv.iloc[:,[1,2,3]])
         from sklearn.linear_model import LinearRegression

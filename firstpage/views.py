@@ -37,8 +37,8 @@ def result(request):
         #csv2 = request.session.get('csv',csv)
         #request.session['csv'] = csv
         size=csv.shape
-
-        request.session['y'] = csv.iloc[:,[3]]
+        del request.session['x']
+        #request.session['y'] = csv.iloc[:,[3]]
         request.session['x'] = csv.iloc[:,[0,1,2]]
         #del request.session['y']
         #del request.session['x']

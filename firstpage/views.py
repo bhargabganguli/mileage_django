@@ -40,8 +40,8 @@ def result(request):
 
         request.session['y'] = csv.iloc[:,[3]]
         request.session['x'] = csv.iloc[:,[0,1,2]]
-        del request.session['y']
-        del request.session['x']
+        #del request.session['y']
+        #del request.session['x']
         from sklearn.linear_model import LinearRegression
         
         X = csv.iloc[:,[3]]
@@ -436,7 +436,8 @@ def carry(request):
     return render(request, 'mmm.html',{'x':uri,'y':uri2,'z':uri3,'carry':True})  
 
 def optimise(request):
-    x_data,y_data=data()
+    #x_data,y_data=data()
+    x_data = request.session.get('x')
     from docplex.mp.model import Model 
     m = Model(name='Optimization_for_MMM')
 

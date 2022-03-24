@@ -49,7 +49,7 @@ def result(request):
             return(x_data,pd.DataFrame(y_data))
         
         global imp
-        def imp(x_data=X,y_data=y):
+        def imp(x_data=request.session.get('x'),y_data=request.session.get('y')):
             X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.25,random_state=0)
             model = RandomForestRegressor(random_state=1)
             model.fit(X_train, y_train)
@@ -73,7 +73,7 @@ def result(request):
 
         
         global regression
-        def regression(x_pred,x_data = X, y_data=y):
+        def regression(x_pred,x_data=request.session.get('x'),y_data=request.session.get('y')):
             pipeline_obj=pipeline.Pipeline([("model",LinearRegression())])
             pipeline_obj.fit(x_data,y_data)
             pred = pipeline_obj.predict(x_pred)

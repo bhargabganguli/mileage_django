@@ -33,15 +33,19 @@ def result(request):
     
     if request.method == "POST":
         file = request.FILES["myFile"]
-        csv=pd.read_csv(file)
+        csv=pd.read_csv(file, index_col["Date"])
         #csv2 = request.session.get('csv',csv)
-        request.session['csv'] = csv
+        #request.session['csv'] = csv
         size=csv.shape
-        request.session['y'] = csv.iloc[:,[4]]
-        request.session['x'] = csv.iloc[:,[1,2,3]]
+        request.session['y'] = csv.iloc[:,[3]]
+        request.session['x'] = csv.iloc[:,[0,1,2]]
         from sklearn.linear_model import LinearRegression
-        X = request.session.get('x')
-        y = request.session.get('y')
+        
+        X = csv.iloc[:,[3]]
+        y = csv.iloc[:,[0,1,2]]
+
+        #X = request.session.get('x')
+        #y = request.session.get('y')
         from sklearn.ensemble import RandomForestRegressor
         from sklearn.model_selection import train_test_split
         from sklearn.metrics import mean_absolute_error as mae

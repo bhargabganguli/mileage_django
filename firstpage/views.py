@@ -45,8 +45,8 @@ def result(request):
         #del request.session['x']
         from sklearn.linear_model import LinearRegression
         
-        X = csv.iloc[:,[3]]
-        y = csv.iloc[:,[0,1,2]]
+        y = csv.iloc[:,[3]]
+        X = csv.iloc[:,[0,1,2]]
 
         #X = request.session.get('x')
         #y = request.session.get('y')

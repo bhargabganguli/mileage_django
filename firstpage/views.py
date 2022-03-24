@@ -34,7 +34,7 @@ def result(request):
     if request.method == "POST":
         file = request.FILES["myFile"]
         csv=pd.read_csv(file)
-        request.session['csv'] = csv
+        request.session.get('csv',csv)
         csv2 = request.session['csv']
         size=csv2.shape
         y=csv2.iloc[:,[4]]

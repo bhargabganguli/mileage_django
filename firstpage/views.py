@@ -47,7 +47,49 @@ def result(request):
         
         y = csv.iloc[:,[4]]
         X = csv.iloc[:,[1,2,3]]
+        x_data,y_data=X,y
+        tuned_model.fit(x_data.iloc[:,[0,1,2]], y_data)
+        value=pd.DataFrame.from_dict(tuned_model.best_params_,orient='index',columns=["value"])
+        # applying get_value() function 
+        tv_sat_a = value._get_value('adstock__tv_pipe__saturation__a', 'value')
+    
+        radio_sat_a = value._get_value('adstock__radio_pipe__saturation__a', 'value')
 
+        Social_Media_sat_a = value._get_value('adstock__social_media_pipe__saturation__a', 'value')
+
+
+
+        y_axis_TV = 1- np.exp(range(0,1100)*(-tv_sat_a))
+        y_axis_radio = 1- np.exp(range(0,1100)*(-radio_sat_a))
+        y_axis_Social_Media = 1- np.exp(range(0,1100)*(-Social_Media_sat_a))
+
+        import matplotlib.pyplot as plt
+        from matplotlib.pyplot import figure
+        plt.clf()
+        plt.plot(range(0,1100),y_axis_TV, label=list(x_data.columns)[0])
+        plt.plot(range(0,1100),y_axis_radio, label=list(x_data.columns)[1])
+        plt.plot(range(0,1100),y_axis_Social_Media, label=list(x_data.columns)[2])
+      
+        plt.legend()
+        plt.show()
+    
+        #fig = plt.gcf()
+
+    
+        buffer = BytesIO()
+    
+        buffer.flush()
+    
+    
+        plt.savefig(buffer, format='png')
+        buffer.seek(0)
+    
+        #string = base64.b64encode(buffer.read())
+        image_png = buffer.getvalue()
+        uri = base64.b64encode(image_png)
+        #uri = urllib.parse.quote(string)     
+        uri = uri.decode('utf-8')
+        buffer.close()
         #X = request.session.get('x')
         #y = request.session.get('y')
         from sklearn.ensemble import RandomForestRegressor
@@ -88,7 +130,7 @@ def result(request):
             pred = pipeline_obj.predict(x_pred)
             return pred
         
-        return render(request, "index.html",{"something":2 , 'x':size, 'imp':True})
+        return render(request, "index.html",{"something":2 , 'x':uri, 'imp':True})
     else:
         reg_fit = 5        
         return render(request, "index.html")

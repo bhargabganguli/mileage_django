@@ -21,13 +21,19 @@
 <h1>Contribution of each advertisement to sales</h1>
 {% endif %}
 
-<img src="data:image/png;base64, {{saturation|safe}}", height="600", width="800">
-{{sat_point|safe}}
-<img src="data:image/png;base64, {{area_plot|safe}}", height="600", width="800">
+<img src="data:image/png;base64, {{saturation|safe}}", height="600", width="800"><br>
+{{sat_point|safe}}<br>
+<img src="data:image/png;base64, {{area_plot|safe}}", height="600", width="800"><br>
 
-<img src="data:image/png;base64, {{tuned_area_plot|safe}}", height="600", width="800">
+<img src="data:image/png;base64, {{tuned_area_plot|safe}}", height="600", width="800"><br>
     
-<img src="data:image/png;base64, {{imp_feature|safe}}", height="600", width="800">
+<img src="data:image/png;base64, {{imp_feature|safe}}", height="600", width="800"><br>
+    
+<img src="data:image/png;base64, {{tv_carry|safe}}", height="600", width="800"><br>
+    
+<img src="data:image/png;base64, {{radio_carry|safe}}", height="600", width="800"><br>
+    
+<img src="data:image/png;base64, {{Social_Media_carry|safe}}", height="600", width="800"><br>
 {% if y %}
     <h1>Contribution of each advertisement to sales with saturation and carryover effect</h1>
 <img src="data:image/png;base64, {{y|safe}}", height="600", width="800">

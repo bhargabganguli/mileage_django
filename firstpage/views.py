@@ -165,7 +165,9 @@ def result(request):
         week_no = list(val.keys())
         values = list(val.values())
         plt.bar(week_no, values)
-    
+        plt.ylabel('% of carry')
+        plt.xlabel('no. of week')
+        
         buffer = BytesIO()
         buffer.flush()
         plt.savefig(buffer, format='png')
@@ -186,7 +188,9 @@ def result(request):
         week_no = list(val2.keys())
         values = list(val2.values())
         plt.bar(week_no, values)
-    
+        plt.ylabel('% of carry')
+        plt.xlabel('no. of week')
+        
         buffer = BytesIO()
         buffer.flush()
         plt.savefig(buffer, format='png')
@@ -208,7 +212,9 @@ def result(request):
         week_no = list(val3.keys())
         values = list(val3.values())
         plt.bar(week_no, values)
-     
+        plt.ylabel('% of carry')
+        plt.xlabel('no. of week')
+        
         buffer = BytesIO()
         buffer.flush()
         plt.savefig(buffer, format='png')

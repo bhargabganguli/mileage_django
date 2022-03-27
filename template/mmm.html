@@ -22,9 +22,13 @@
 {% endif %}
 
 
-<img src="data:image/png;base64, {{x|safe}}", height="600", width="800">
+<img src="data:image/png;base64, {{saturation|safe}}", height="600", width="800">
 
+<img src="data:image/png;base64, {{area_plot|safe}}", height="600", width="800">
 
+<img src="data:image/png;base64, {{tuned_area_plot|safe}}", height="600", width="800">
+    
+<img src="data:image/png;base64, {{imp_feature|safe}}", height="600", width="800">
 {% if y %}
     <h1>Contribution of each advertisement to sales with saturation and carryover effect</h1>
 <img src="data:image/png;base64, {{y|safe}}", height="600", width="800">

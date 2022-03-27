@@ -150,8 +150,76 @@ def result(request):
         plt.clf()
         string = base64.b64encode(buffer.read())
         uri4 = urllib.parse.quote(string)         
-        #
         
+        
+        tuned_model.fit(x_data.iloc[:,[0,1,2]], y_data)
+        value = pd.DataFrame.from_dict(tuned_model.best_params_ , orient='index', columns=["value"] )
+        tv_carry_week = int(value._get_value('adstock__tv_pipe__carryover__length', 'value'))
+        w=100
+        tv_carry_strength = value._get_value('adstock__tv_pipe__carryover__strength', 'value')
+        val={0:100}
+        for i in range(1,tv_carry_week+1):
+            val[i] = w*tv_carry_strength
+            w=w*tv_carry_strength
+
+        week_no = list(val.keys())
+        values = list(val.values())
+        plt.bar(week_no, values)
+    
+        buffer = BytesIO()
+        buffer.flush()
+        plt.savefig(buffer, format='png')
+        buffer.seek(0)
+        plt.clf()
+        image_png = buffer.getvalue()
+        uri5 = base64.b64encode(image_png)   
+        uri5 = uri5.decode('utf-8')
+        buffer.close()
+    
+        radio_carry_week = int(value._get_value('adstock__radio_pipe__carryover__length', 'value'))
+        w=100
+        val2={0:100}
+        radio_carry_strength = value._get_value('adstock__radio_pipe__carryover__strength', 'value')
+        for i in range(1,radio_carry_week+1):
+            val2[i] = w*radio_carry_strength
+            w=w*radio_carry_strength
+        week_no = list(val2.keys())
+        values = list(val2.values())
+        plt.bar(week_no, values)
+    
+        buffer = BytesIO()
+        buffer.flush()
+        plt.savefig(buffer, format='png')
+        buffer.seek(0)
+        plt.clf()
+        image_png = buffer.getvalue()
+        uri6 = base64.b64encode(image_png)   
+        uri6 = uri6.decode('utf-8')
+        buffer.close()
+    
+        Social_Media_carry_week = int(value._get_value('adstock__social_media_pipe__carryover__length', 'value'))
+        #Social_Media_carry_week = 4
+        w=100
+        Social_Media_carry_strength = value._get_value('adstock__social_media_pipe__carryover__strength', 'value')
+        val3={0:100}
+        for i in range(1,Social_Media_carry_week+1):
+            val3[i] = w*Social_Media_carry_strength
+            w=w*Social_Media_carry_strength
+        week_no = list(val3.keys())
+        values = list(val3.values())
+        plt.bar(week_no, values)
+     
+        buffer = BytesIO()
+        buffer.flush()
+        plt.savefig(buffer, format='png')
+        buffer.seek(0)
+        plt.clf()
+        image_png = buffer.getvalue()
+        uri7 = base64.b64encode(image_png)   
+        uri7 = uri7.decode('utf-8')
+        buffer.close()        
+        #
+        context={"something":2 , 'saturation':uri, 'sat_point':sat_point, 'area_plot':uri2, 'tuned_area_plot':uri3, 'imp_feature':uri4, 'tv_carry':uri5, 'radio_carry':uri6, 'Social_Media_carry':uri7, 'imp':True}
         global data
         def data(x_data=X,y_data=y):
             return(x_data,pd.DataFrame(y_data))
@@ -194,7 +262,7 @@ def result(request):
             pred=0
             return pred
         
-        return render(request, "mmm.html",{"something":2 , 'saturation':uri, 'sat_point':sat_point, 'area_plot':uri2, 'tuned_area_plot':uri3, 'imp_feature':uri4, 'imp':True})
+        return render(request, "mmm.html",context)
     else:
         reg_fit = 5        
         return render(request, "index.html")

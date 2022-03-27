@@ -30,7 +30,9 @@ def index(request):
 
 #this is user defined function to load the csv data into a  dataframe(name=csv)
 def result(request):
-    
+    from sklearn.ensemble import RandomForestRegressor
+    from sklearn.model_selection import train_test_split
+    from sklearn.metrics import mean_absolute_error as mae
     if request.method == "POST":
         file = request.FILES["myFile"]
         csv=pd.read_csv(file)
@@ -143,9 +145,7 @@ def result(request):
         string = base64.b64encode(buffer.read())
         uri4 = urllib.parse.quote(string)         
         #
-        from sklearn.ensemble import RandomForestRegressor
-        from sklearn.model_selection import train_test_split
-        from sklearn.metrics import mean_absolute_error as mae
+        
         global data
         def data(x_data=X,y_data=y):
             return(x_data,pd.DataFrame(y_data))

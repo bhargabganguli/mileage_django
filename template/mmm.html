@@ -17,33 +17,34 @@
         input {text-align: center;}
     </style>
 <center>
-{% if y %}
-<h1>Contribution of each advertisement to sales</h1>
-{% endif %}
 
 <img src="data:image/png;base64, {{saturation|safe}}", height="600", width="800"><br>
 {{sat_point|safe}}<br>
+
+<h1>Contribution of each advertisement to sales</h1>
+
 <img src="data:image/png;base64, {{area_plot|safe}}", height="600", width="800"><br>
+
+<h1>Contribution of each advertisement to sales with saturation and carryover effect</h1>
 
 <img src="data:image/png;base64, {{tuned_area_plot|safe}}", height="600", width="800"><br>
     
+<h1>According to the data the importance of each advertisement channels are shown
+ in the bar graph</h1>
+
 <img src="data:image/png;base64, {{imp_feature|safe}}", height="600", width="800"><br>
-    
+ 
+<h1>TV Radio and Social Media may have a carry over effect
+Individually. This is shown through this graphs below.</h1>
+   
 <img src="data:image/png;base64, {{tv_carry|safe}}", height="600", width="800"><br>
     
 <img src="data:image/png;base64, {{radio_carry|safe}}", height="600", width="800"><br>
     
 <img src="data:image/png;base64, {{Social_Media_carry|safe}}", height="600", width="800"><br>
-{% if y %}
-    <h1>Contribution of each advertisement to sales with saturation and carryover effect</h1>
-<img src="data:image/png;base64, {{y|safe}}", height="600", width="800">
-{% endif %}
-    
-{% if carry %}
-    <h1>Contribution of each advertisement to sales with saturation and carryover effect</h1>
-<img src="data:image/png;base64, {{z|safe}}", height="600", width="800">
-{{z|safe}}
-{% endif %}    
+
+<h1>This Is the whole analysis of the dataset. Thanks. </h1>
+
 <div style="width: 450px; height: 500px; overflow-y: scroll;overflow: auto;">
 </div>
 </center>

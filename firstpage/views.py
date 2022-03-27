@@ -157,7 +157,7 @@ def result(request):
         tv_carry_week = int(value._get_value('adstock__tv_pipe__carryover__length', 'value'))
         w=100
         tv_carry_strength = value._get_value('adstock__tv_pipe__carryover__strength', 'value')
-        val={0:100}
+        val={0:100,1:0,2:0}
         for i in range(1,tv_carry_week+1):
             val[i] = w*tv_carry_strength
             w=w*tv_carry_strength
@@ -178,7 +178,7 @@ def result(request):
     
         radio_carry_week = int(value._get_value('adstock__radio_pipe__carryover__length', 'value'))
         w=100
-        val2={0:100}
+        val2={0:100,1:0,2:0}
         radio_carry_strength = value._get_value('adstock__radio_pipe__carryover__strength', 'value')
         for i in range(1,radio_carry_week+1):
             val2[i] = w*radio_carry_strength
@@ -201,7 +201,7 @@ def result(request):
         #Social_Media_carry_week = 4
         w=100
         Social_Media_carry_strength = value._get_value('adstock__social_media_pipe__carryover__strength', 'value')
-        val3={0:100}
+        val3={0:100,1:0,2:0}
         for i in range(1,Social_Media_carry_week+1):
             val3[i] = w*Social_Media_carry_strength
             w=w*Social_Media_carry_strength

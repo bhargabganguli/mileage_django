@@ -52,13 +52,8 @@ def result(request):
         value=pd.DataFrame.from_dict(tuned_model.best_params_,orient='index',columns=["value"])
         # applying get_value() function 
         tv_sat_a = value._get_value('adstock__tv_pipe__saturation__a', 'value')
-    
         radio_sat_a = value._get_value('adstock__radio_pipe__saturation__a', 'value')
-
         Social_Media_sat_a = value._get_value('adstock__social_media_pipe__saturation__a', 'value')
-
-
-
         y_axis_TV = 1- np.exp(range(0,1100)*(-tv_sat_a))
         y_axis_radio = 1- np.exp(range(0,1100)*(-radio_sat_a))
         y_axis_Social_Media = 1- np.exp(range(0,1100)*(-Social_Media_sat_a))
@@ -69,29 +64,85 @@ def result(request):
         plt.plot(range(0,1100),y_axis_TV, label=list(x_data.columns)[0])
         plt.plot(range(0,1100),y_axis_radio, label=list(x_data.columns)[1])
         plt.plot(range(0,1100),y_axis_Social_Media, label=list(x_data.columns)[2])
-      
         plt.legend()
         plt.show()
-    
-        #fig = plt.gcf()
-
-    
+        #converting plt to bytes to pass in template
         buffer = BytesIO()
-    
-        buffer.flush()
-    
-    
+        buffer.flush()    
         plt.savefig(buffer, format='png')
         buffer.seek(0)
-    
-        #string = base64.b64encode(buffer.read())
         image_png = buffer.getvalue()
         uri = base64.b64encode(image_png)
         #uri = urllib.parse.quote(string)     
         uri = uri.decode('utf-8')
         buffer.close()
-        #X = request.session.get('x')
-        #y = request.session.get('y')
+        
+        lr = LinearRegression()
+        x_data,y_data=X,y
+        lr.fit(x_data,y_data)
+        weights = pd.Series(lr.coef_[0],index=x_data.columns)
+        base = lr.intercept_[0]
+        unadj_contributions = x_data.mul(weights).assign(Base=base)
+        adj_contributions = (unadj_contributions.div(unadj_contributions.sum(axis=1), axis=0))
+    
+        adj_contributions = adj_contributions.mul(np.array(y_data), axis=0)
+        # contains all contributions for each day
+    
+        ax = (adj_contributions[['Base', 'TV', 'Radio', 'Social_Media']].plot.area(figsize=(16, 10),linewidth=1,title='Predicted Sales and Breakdown',ylabel='Sales',xlabel='Date'))
+        handles, labels = ax.get_legend_handles_labels()
+        ax.legend(handles[::-1], labels[::-1],title='Channels', loc="center left",bbox_to_anchor=(1.01, 0.5))
+       
+        buffer = BytesIO()
+        buffer.flush()
+        plt.savefig(buffer, format='png')
+        buffer.seek(0)
+        plt.clf()
+        image_png = buffer.getvalue()
+        uri2 = base64.b64encode(image_png)
+        uri2 = uri2.decode('utf-8')
+        buffer.close()
+    
+        # TUNED AREA PLOT
+        tuned_model.fit(x_data.iloc[:,[0,1,2]], y_data)
+        adstock_data = pd.DataFrame(tuned_model.best_estimator_.named_steps['adstock'].transform(x_data),columns=x_data.columns,index=x_data.index)
+        weights = pd.Series(tuned_model.best_estimator_.named_steps['regression'].coef_[0],index=x_data.columns)
+        base = tuned_model.best_estimator_.named_steps['regression'].intercept_
+        unadj_contributions = adstock_data.mul(weights).assign(Base=base[0])
+        adj_contributions = (unadj_contributions.div(unadj_contributions.sum(axis=1), axis=0).mul(np.array(y_data), axis=0))
+        ax = (adj_contributions[['Base', 'Social_Media', 'Radio', 'TV']].plot.area(figsize=(16, 10),linewidth=1,title='Predicted Sales and Breakdown',ylabel='Sales',xlabel='Date'))
+    
+        handles, labels = ax.get_legend_handles_labels()
+        ax.legend(handles[::-1], labels[::-1],title='Channels', loc="center left",bbox_to_anchor=(1.01, 0.5))
+        
+        buffer = BytesIO()
+        buffer.flush()
+        plt.savefig(buffer, format='png')
+        buffer.seek(0)
+        plt.clf()
+        image_png = buffer.getvalue()
+        uri3 = base64.b64encode(image_png)  
+        uri3 = uri3.decode('utf-8')
+        buffer.close()
+        
+        #IMP feature
+        X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.25,random_state=0)
+        model = RandomForestRegressor(random_state=1)
+        model.fit(X_train, y_train)
+        pred = model.predict(X_test)
+        feat_importances = pd.Series(model.feature_importances_, index=x_data.columns)
+        x=feat_importances.to_dict()
+        plt.bar(list(x.keys()),list(x.values()))
+        plt.xlabel("attributes")
+        plt.ylabel("importance")
+
+        fig = plt.gcf()
+        buffer = BytesIO()
+        fig.savefig(buffer, format='png')
+        buffer.seek(0)
+        plt.clf()
+        string = base64.b64encode(buffer.read())
+        uri4 = urllib.parse.quote(string)         
+        #
         from sklearn.ensemble import RandomForestRegressor
         from sklearn.model_selection import train_test_split
         from sklearn.metrics import mean_absolute_error as mae
@@ -101,6 +152,7 @@ def result(request):
         
         global imp
         def imp(x_data=X,y_data=y):
+            """
             X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.25,random_state=0)
             model = RandomForestRegressor(random_state=1)
             model.fit(X_train, y_train)
@@ -119,18 +171,24 @@ def result(request):
             buffer.seek(0)
             plt.clf()
             string = base64.b64encode(buffer.read())
+            """
             uri = urllib.parse.quote(string) 
+            
             return uri
 
         
         global regression
         def regression(x_pred,x_data=X,y_data=y):
+            """
             pipeline_obj=pipeline.Pipeline([("model",LinearRegression())])
             pipeline_obj.fit(x_data,y_data)
+            
             pred = pipeline_obj.predict(x_pred)
+            """
+            pred=0
             return pred
         
-        return render(request, "index.html",{"something":2 , 'x':uri, 'imp':True})
+        return render(request, "mmm.html",{"something":2 , 'saturation':uri, 'area_plot':uri2, 'tuned_area_plot':uri3, 'imp_feature':uri4, 'imp':True})
     else:
         reg_fit = 5        
         return render(request, "index.html")

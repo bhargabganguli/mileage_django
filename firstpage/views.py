@@ -93,7 +93,7 @@ def result(request):
         adj_contributions = adj_contributions.mul(np.array(y_data), axis=0)
         # contains all contributions for each day
     
-        ax = (adj_contributions[['Base', 'TV', 'Radio', 'Social_Media']].plot.area(figsize=(16, 10),linewidth=1,title='Predicted Sales and Breakdown',ylabel='Sales',xlabel='Date'))
+        ax = (adj_contributions[['Base', 'TV', 'Radio', 'Social_Media']].plot.area(figsize=(16, 10),color={'TV':'#AA3142', 'Radio':'#17A589', 'Social_Media':'#9C640C', 'Base':'#1f6f15'},linewidth=1,title='Predicted Sales and Breakdown',ylabel='Sales',xlabel='Date'))
         handles, labels = ax.get_legend_handles_labels()
         ax.legend(handles[::-1], labels[::-1],title='Channels', loc="center left",bbox_to_anchor=(1.01, 0.5))
        
@@ -114,7 +114,7 @@ def result(request):
         base = tuned_model.best_estimator_.named_steps['regression'].intercept_
         unadj_contributions = adstock_data.mul(weights).assign(Base=base[0])
         adj_contributions = (unadj_contributions.div(unadj_contributions.sum(axis=1), axis=0).mul(np.array(y_data), axis=0))
-        ax = (adj_contributions[['Base', 'Social_Media', 'Radio', 'TV']].plot.area(figsize=(16, 10),linewidth=1,title='Predicted Sales and Breakdown',ylabel='Sales',xlabel='Date'))
+        ax = (adj_contributions[['Base', 'Social_Media', 'Radio', 'TV']].plot.area(figsize=(16, 10),color={'TV':'#AA3142', 'Radio':'#17A589', 'Social_Media':'#9C640C', 'Base':'#1f6f15'},linewidth=1,title='Predicted Sales and Breakdown',ylabel='Sales',xlabel='Date'))
     
         handles, labels = ax.get_legend_handles_labels()
         ax.legend(handles[::-1], labels[::-1],title='Channels', loc="center left",bbox_to_anchor=(1.01, 0.5))

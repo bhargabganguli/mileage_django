@@ -62,16 +62,16 @@ def result(request):
         Social_Media_sat_point = np.log(0.1)/(-Social_Media_sat_a)
         sat_point = [tv_sat_point,radio_sat_point,Social_Media_sat_point]
         
-        y_axis_TV = 1- np.exp(range(0,(max(sat_point)+1000))*(-tv_sat_a))
-        y_axis_radio = 1- np.exp(range(0,(max(sat_point)+1000))*(-radio_sat_a))
-        y_axis_Social_Media = 1- np.exp(range(0,(max(sat_point)+1000))*(-Social_Media_sat_a))
+        y_axis_TV = 1- np.exp(range(0,(int(max(sat_point))+1000))*(-tv_sat_a))
+        y_axis_radio = 1- np.exp(range(0,(int(max(sat_point))+1000))*(-radio_sat_a))
+        y_axis_Social_Media = 1- np.exp(range(0,(int(max(sat_point))+1000))*(-Social_Media_sat_a))
  
         import matplotlib.pyplot as plt
         from matplotlib.pyplot import figure
         plt.clf()
-        plt.plot(range(0,(max(sat_point)+1000)),y_axis_TV, label=list(x_data.columns)[0])
-        plt.plot(range(0,(max(sat_point)+1000)),y_axis_radio, label=list(x_data.columns)[1])
-        plt.plot(range(0,(max(sat_point)+1000)),y_axis_Social_Media, label=list(x_data.columns)[2])
+        plt.plot(range(0,(int(max(sat_point))+1000)),y_axis_TV, label=list(x_data.columns)[0])
+        plt.plot(range(0,(int(max(sat_point))+1000)),y_axis_radio, label=list(x_data.columns)[1])
+        plt.plot(range(0,(int(max(sat_point))+1000)),y_axis_Social_Media, label=list(x_data.columns)[2])
         plt.legend()
         plt.show()
         #converting plt to bytes to pass in template

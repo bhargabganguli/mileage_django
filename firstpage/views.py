@@ -39,8 +39,8 @@ def result(request):
         #csv2 = request.session.get('csv',csv)
         #request.session['csv'] = csv
         size=csv.shape
-        csv=csv.sort_values(by='Date')
-        csv=csv.reset_index()
+        #csv=csv.sort_values(by='Date')
+        #csv=csv.reset_index()
         #request.session['y'] = csv.iloc[:,[3]]
         #request.session['x'] = csv.iloc[:,[0,1,2]]
         #del request.session['x']

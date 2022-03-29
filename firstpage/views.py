@@ -224,9 +224,50 @@ def result(request):
         image_png = buffer.getvalue()
         uri7 = base64.b64encode(image_png)   
         uri7 = uri7.decode('utf-8')
-        buffer.close()        
+        buffer.close()      
+
+        from docplex.mp.model import Model 
+        m = Model(name='Optimization_for_MMM')
+
+        # Variables
+        TV = m.integer_var(name='TV')
+        Radio = m.integer_var(name='Radio')
+        SM = m.integer_var(name='Social_Media')
+
+        # Constraints
+        ## On Tv
+        TV_non_neg = m.add_constraint(TV >= 1)
+
+        ## On SM
+        #SM_Min = m.add_constraint(SM >= 100)
+        SM_Max = m.add_constraint(SM <= 250)
+        SM_non_neg = m.add_constraint(SM >= 1)
+
+        ## On Radio
+        #Radio_Min = m.add_constraint(Radio >= 120)
+        Radio_Max = m.add_constraint(Radio <= 400)
+        Radio_non_neg = m.add_constraint(Radio >= 1)
+
+        # Constraints on Total ad spend
+        Total_budget_max = m.add_constraint(m.sum([TV + Radio + SM]) <= int(request.POST.get('budget')))
+
+        # Coefficient
+        TV_coef = 3.425
+        Radio_coef = 1.07
+        SM_coef = 2.367
+        intercept = 84.68
+
+        # Optimized Budget
+        m.maximize(TV*TV_coef + Radio*Radio_coef + SM*SM_coef + intercept)
+        sol = m.solve()
+        data2 = []
+        for v in m.iter_variables():
+             data2.append(sol.get_value(v)) 
+        #data2 = m.iter_variables()
+        frame = pd.DataFrame(data2)
+  
         #
-        context={"something":2 , 'saturation':uri, 'sat_point':sat_point, 'tv_sat':sat_point[0],'radio_sat':sat_point[1],'Social_Media_sat':sat_point[2],'area_plot':uri2, 'tuned_area_plot':uri3, 'imp_feature':uri4, 'tv_carry':uri5, 'radio_carry':uri6, 'Social_Media_carry':uri7, 'tv_column':X.columns[0], 'radio_column':X.columns[1], 'Social_Media_column':X.columns[2],'imp':True}
+        context={"something":2 , 'optimize':data2, 'saturation':uri, 'sat_point':sat_point, 'tv_sat':sat_point[0],'radio_sat':sat_point[1],'Social_Media_sat':sat_point[2],'area_plot':uri2, 'tuned_area_plot':uri3, 'imp_feature':uri4, 'tv_carry':uri5, 'radio_carry':uri6, 'Social_Media_carry':uri7, 'tv_column':X.columns[0], 'radio_column':X.columns[1], 'Social_Media_column':X.columns[2],'imp':True}
         return render(request, "mmm.html",context)
     else:   
         return render(request, "index.html")

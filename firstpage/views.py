@@ -226,7 +226,7 @@ def result(request):
         uri7 = uri7.decode('utf-8')
         buffer.close()        
         #
-        context={"something":2 , 'saturation':uri, 'sat_point':sat_point, 'tv_sat':sat_point[0],'radio_sat':sat_point[1],'Social_Media_sat':sat_point[2],'area_plot':uri2, 'tuned_area_plot':uri3, 'imp_feature':uri4, 'tv_carry':uri5, 'radio_carry':uri6, 'Social_Media_carry':uri7, 'tv_column':X.columns[0], 'radio_column':X.columns[1], 'Social_Media_column':X.columns[2],'imp':True}
+        context={"something":2 , 'saturation':uri, 'sat_point':sat_point, 'tv_sat':csv,'radio_sat':sat_point[1],'Social_Media_sat':sat_point[2],'area_plot':uri2, 'tuned_area_plot':uri3, 'imp_feature':uri4, 'tv_carry':uri5, 'radio_carry':uri6, 'Social_Media_carry':uri7, 'tv_column':X.columns[0], 'radio_column':X.columns[1], 'Social_Media_column':X.columns[2],'imp':True}
         return render(request, "mmm.html",context)
     else:   
         return render(request, "index.html")

@@ -23,6 +23,9 @@
 {% for i in sat_point %}
 {{i}}<br>
 {% endfor %}
+
+{{sat_point[0]|safe}}
+
 <h1>Contribution of each advertisement to sales</h1>
 
 <img src="data:image/png;base64, {{area_plot|safe}}", height="600", width="800"><br>

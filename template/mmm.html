@@ -19,8 +19,10 @@
 <center>
 
 <img src="data:image/png;base64, {{saturation|safe}}", height="600", width="800"><br>
-{{sat_point|safe}}<br>
 
+{% for i in sat_point %}
+{{i}}<br>
+{% endfor %}
 <h1>Contribution of each advertisement to sales</h1>
 
 <img src="data:image/png;base64, {{area_plot|safe}}", height="600", width="800"><br>

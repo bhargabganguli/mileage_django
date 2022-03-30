@@ -228,7 +228,7 @@ def result(request):
 
         from docplex.mp.model import Model 
         m = Model(name='Optimization_for_MMM')
-
+        coef = tuned_model.best_estimator_.named_steps['regression'].coef_
         # Variables
         TV = m.integer_var(name='TV')
         Radio = m.integer_var(name='Radio')
@@ -252,9 +252,9 @@ def result(request):
         Total_budget_max = m.add_constraint(m.sum([TV + Radio + SM]) <= int(request.POST.get('budget')))
 
         # Coefficient
-        TV_coef = 3.425
-        Radio_coef = 1.07
-        SM_coef = 2.367
+        TV_coef = coef[0]
+        Radio_coef = coef[1]
+        SM_coef = coef[2]
         intercept = 84.68
 
         # Optimized Budget

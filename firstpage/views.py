@@ -252,9 +252,9 @@ def result(request):
         Total_budget_max = m.add_constraint(m.sum([TV + Radio + SM]) <= int(request.POST.get('budget')))
 
         # Coefficient
-        TV_coef = coef[0]
-        Radio_coef = coef[1]
-        SM_coef = coef[2]
+        TV_coef = coef[0][0]
+        Radio_coef = coef[0][1]
+        SM_coef = coef[0][2]
         intercept = 84.68
 
         # Optimized Budget

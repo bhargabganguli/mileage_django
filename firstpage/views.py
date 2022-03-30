@@ -31,7 +31,7 @@ def index(request):
 #this is user defined function to load the csv data into a  dataframe(name=csv)
 
 from django.views.decorators.cache import cache_control
-@cache_control(no_cache=True, must_revalidate=True)
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def result(request):
     from sklearn.ensemble import RandomForestRegressor
     from sklearn.model_selection import train_test_split

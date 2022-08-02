@@ -2,58 +2,177 @@
     <head>
     <title>mmm output</title>
 </head>
-<body style="background-color:rgb(80,150,0);">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" >
+<body style="background-color:powderblue;">
     <style>
-        table, th, td {
-            border:1px solid black;
-            width:33%;
-            margin-left: auto;
-            margin-right: auto;
-          }
-        h2 {text-align: center;}
-        h3 {text-align: center;}
         div {text-align: center;
             font-weight: bold;}
         input {text-align: center;}
+        select{
+        width: 500px;
+        margin: 10px;
+        }
+        
+        .button{
+        background-color:black;
+        border:none;
+        color:white;
+        padding: 15px,32px;
+        text-align: center;
+        
+        font-size:16px;
+        margin:4px 2px;
+        font-size:30px;
+        float:left;
+        cursor:pointer;
+        }
     </style>
-<center>
-<h1>{{optimize}}</h1>
-<img src="data:image/png;base64, {{saturation|safe}}", height="600", width="800"><br>
 
-<h1>It is advised to spend maximum of 
-{{tv_sat}} on {{tv_column}}. 
-And to spend maximum of 
-{{radio_sat}} on {{radio_column}}
-And to spend maximum of
-{{Social_Media_sat}} on {{Social_Media_column}}
-</h1>
+<h1>size of the uploaded dataset is: 
+    no. of columns:{{columns}}, no. of rows:{{rows}}</h1>
+    <br>
+    <h5>columns are</h5>
 
-<h1>Contribution of each advertisement to sales</h1>
-
-<img src="data:image/png;base64, {{area_plot|safe}}", height="600", width="800"><br>
-
-<h1>Contribution of each advertisement to sales with saturation and carryover effect</h1>
-
-<img src="data:image/png;base64, {{tuned_area_plot|safe}}", height="600", width="800"><br>
+    <table>
+    <tr>
+    {% for i in col_name %}
+    <td>{{i}}<br></td>
+    {% endfor %}
+    </tr>
+    <tr>
+    {% for i in disc_col_name %}
+    <td>{{i}}</td> 
+    {% endfor %}
+    </tr>
+    </table>
     
-<h1>According to the data the importance of each advertisement channels are shown
- in the bar graph</h1>
-
-<img src="data:image/png;base64, {{imp_feature|safe}}", height="600", width="800"><br>
+    <form method="post" enctype="multipart/form-data" action="/statistics">
+    {% csrf_token %}
+    <input type="submit" class="button" value="statistical tests">
+    </form>
+    <br>
+    <form style="background-color:#FF9933" method="POST" action="/scatter" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <h2>See scatterplot </h2>
+        <label>Choose X variable</label>
+        <select id ="columns" name="column1">
+        {% for i in col_name %}
+        <option value="{{i}}">{{i}}</option>
+        {% endfor %}
+        </select>
+        <br>
+        <label>Choose Y variable</label>
+        <select id ="columns" name="column2">
+        {% for i in col_name %}
+        <option value="{{i}}">{{i}}</option>
+        {% endfor %}
+        </select>
+        <br>
+        <input type="submit" name="submit data" value="see scatterplot" style="height:50px; width:200px; background-color:138808">
+    </form>
  
-<h1>TV Radio and Social Media may have a carry over effect
-Individually. This is shown through this graphs below.</h1>
-   
-<img src="data:image/png;base64, {{tv_carry|safe}}", height="600", width="800"><br>
+    <form style="background-color:#FF9933" method="POST" action="/pareto" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <h2>See pareto </h2>
+        <label>Choose X variable</label>
+        
+        <select id ="columns" name="column1">
+        {% for i in disc_col_name %}
+        <option value="{{i}}">{{i}}</option>
+        {% endfor %}
+        </select>
+        <br>
+        <label>Choose Y variable</label>
+        <select id ="columns" name="column2">
+        {% for i in col_name %}
+        <option value="{{i}}">{{i}}</option>
+        {% endfor %}
+        </select>
+        <br>
+        <input type="submit" name="submit data" value="see pareto" style="height:50px; width:200px; background-color:138808">
+    </form>
     
-<img src="data:image/png;base64, {{radio_carry|safe}}", height="600", width="800"><br>
     
-<img src="data:image/png;base64, {{Social_Media_carry|safe}}", height="600", width="800"><br>
-
-<h1>This Is the whole analysis of the dataset. Thanks. </h1>
-
-<div style="width: 450px; height: 500px; overflow-y: scroll;overflow: auto;">
-</div>
-</center>
+     <form style="background-color:#FFFFFF" method="POST" action="/histogram" enctype="multipart/form-data">
+         {% csrf_token %}
+         
+         <h2>See histogram frequency plot </h2>
+          <label>Choose X variable</label>
+          
+         <select id ="columns" name="column1">
+         {% for i in col_name %}
+         <option value="{{i}}">{{i}}</option>
+         {% endfor %}
+         </select>
+        
+         <img width=100 src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Spinning_Ashoka_Chakra.gif?20120315182810">
+         <br>
+         
+         <label>Choose number of bins: </label>
+         
+         <input type="number" name="bins" value=3>
+         
+         <input type="submit" name="submit data" value="see histogram" style="height50px; width:200px; background-color:powderblue">
+     </form>
+     
+     
+     
+     <form style="background-color:138808" method="POST" action="/boxplot" enctype="multipart/form-data">
+         {% csrf_token %}
+         
+         <h2>See boxplot to see percentile and outliers </h2>
+         <label>Choose X variable</label>
+         <select id ="columns" name="column1">
+         {% for i in col_name %}
+         <option value="{{i}}">{{i}}</option>
+         {% endfor %}
+         </select>
+         <label>Choose group variable</label>
+         <select id ="columns" name="grp">
+         {% for i in disc_col_name %}
+         <option value="{{i}}">{{i}}</option>
+         {% endfor %}
+         </select>
+         <br>
+         <br>
+         <input type="submit" name="submit data" value="see boxplot" style="height:50px; width:200px; background-color:#FF9933">
+     </form>
+     
+     
+     
+     <form style="background-color:138808" method="POST" action="/barplot" enctype="multipart/form-data">
+         {% csrf_token %}
+         
+         <h2>See barplot </h2>
+         <label>Choose X variable</label>
+         <select id ="columns" name="column1">
+         {% for i in disc_col_name %}
+         <option value="{{i}}">{{i}}</option>
+         {% endfor %}
+         </select>
+         <br>
+         <label>Choose Y variable</label>
+         
+         <select id ="columns" name="column2">
+         {% for i in col_name %}
+         <option value="{{i}}">{{i}}</option>
+         {% endfor %}
+         </select>
+         <br><br>
+         <b>
+         <label>Choose AGGREGATION type</label>
+         <br>
+         <label>SUM</label>
+         <input type="radio" name="aggregation" value="sum">
+         <label>AVERAGE</label>
+         <input type="radio" name="aggregation" value="average">
+         <br>
+         </b>
+         <input type="submit" name="submit data" value="see barplot" style="height:50px; width:200px; background-color:#FF9933">
+         
+     </form>
 </body>
+
 </html>

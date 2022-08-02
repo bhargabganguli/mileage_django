@@ -25,10 +25,31 @@ urlpatterns = [
     url('^$',views.index, name='Homepage'),
     url('predictMPG',views.predictMPG,name='PredictMPG'),
     url('MPGdb',views.viewdb,name='PredictMPG'),
+    
     url('submit',views.result,name='upload'),
+    
     url('upload',views.upload,name='upload'),
+    
+    url('barplot',views.barplot,name='barplot'),
+    
+    url('pareto',views.pareto,name='pareto'),
+    
     url('boxplot',views.boxplot,name='PredictMPG'),
-    url('barplot',views.barplot,name='PredictMPG'),
+    
+    url('histogram',views.histogram,name='PredictMPG'),
+    
+    url('scatter',views.scatterplot,name='scatter'),
+    
+    url('about',views.about,name='about'),
+    
+    url('game',views.game,name='game'),
+    
+    url('matchstick',views.matchstick,name='matchstick'),
+    
+    url('statistics',views.statistics,name='statistics'),
+    
+    url('ttest',views.ttest,name='ttest'),
+    
     url('imp_features',views.imp_features,name='impfeat'),
     url('saturation',views.saturation,name='saturation'),
     url('area_plot',views.area_plot,name='area_plot'),

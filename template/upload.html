@@ -2,6 +2,7 @@
     <head>
         <title>Upload</title>
     </head>
+    <!--
      <script type="text/javascript"> 
 
         function preventBack() { 
@@ -18,8 +19,11 @@
 
         window.onunload = function () { null }; 
 
-    </script> 
-    <body style="background-color:rgb(80,110,0)">
+    </script>
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+
+    <body style="background-color:rgb(150,0,0)">
         <style>
         table{
             height:30%;
@@ -35,27 +39,28 @@
             margin-left: auto;
             margin-right: auto;
           }
+          
+          h2,h1{
+            color:powderblue;
+          }
         </style>
-        <h1>Upload such .csv file which has the following structure</h1>
+        <h1>Upload any .csv file with no blank data</h1>
 
-        <table summary="no_orderDate" bgcolor=#ffb3b3>
-        <tr>
-            <td>date</td>
-            <td>TV</td>
-            <td>Radio</td>
-            <td>Social_Media</td>
-            <td>Total_Sales</td>
-            
-        </tr>
-        </table>
         <br>
+        
+        <h1> By uploading a csv file with no blank data you will be able to see
+        many graphs and plots which u want to see. </h1>
+        
+        <h2> I have tried to include many graphs and chats 
+        and some statistical analysis tools also </h2>
+        <center>
         <form method="POST" action="/submit" enctype="multipart/form-data">
             {% csrf_token %}
-            <input type="file" name="myFile"><br>
-            <input type="submit" name="submit">
-            Enter budget
-            <input name="budget" type="text" value=10000><br><br>
+            <input type="file" name="myFile" style="height:50px; width:200px; background-color:rgb(150,0,0)">
+            <br><br><br>
+            <input type="submit" name="submit" style="height:50px; width:200px; background-color:powderblue">
         </form>
-
+        
+        </center>
     </body>
 </html>

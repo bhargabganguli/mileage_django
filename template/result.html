@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <style>
-        h1 {text-align: center;}
-        p {text-align: center;}
-        div {text-align: center;}
-        input {text-align: center;
-            background-color:rgb(0,1000,0);
-            font-weight: bold;
-        }
-    </style>
-    <title>MPG prediction usecase</title>
 </head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" >
+
 <body style="background-color:powderblue;">
-    {% if scoreval %}
-    <h1 style="color:blue;">EXPECTED MILEAGE : {{scoreval}} <p style="color:green">miles per galon</p></h1>
-    <h1 style="color:blue;">RSQ VALUE : {{summary}} </h1>
-    <!--
-    <h1 style="color:blue;">coeff values : {{coef}} </h1>
-    -->
-    {% endif %}
-    <br>
-    <center>
-    <form method="post" enctype="multipart/form-data" action="boxplot">
-        {% csrf_token %}
-            <input type="submit" value="VIEW boxplot" style="height:70px; width:400px" >
-    </form>
+{{graph2|safe}}
 
-    <form method="post" enctype="multipart/form-data" action="barplot">
-        {% csrf_token %}
-            <input type="submit" value="VIEW bar" style="height:70px; width:400px" >
-    </form>
-    <center>
-    {% if something %}
-    <center>
-        {{ graph|safe }}
-    </center>
-    {% endif %}
+{% if one_sample %}
+<h2>
+p-value of the shapiro wilk normality test is :{{normality}}
+<br>
+and p-value of the {{type}} test is :<br>{{result}}
+{% if pvalue != ideal %}
+<br><br><br>
+Inference:
+<br>
+The population {{tendency}} is not {{alt}} the specified mean value of {{benchmark}}
+<br>
+It means accept the null hypothesis
+{% else %}
+<br>
+Inference:
+<br>
+The population {{tendency}} is {{alt}} the specified mean value of {{benchmark}}
+<br>
+It means reject the null hypothesis
+{% endif %}
+<form method="post" enctype="multipart/form-data" action="/statistics">
+{% csrf_token %}
+<input type="submit" class="button" value="back to statistical tests" style="height:50px; width:200px; background-color:pink">
+</form>
+</h2>
+{% endif %}
 
-    {% if something2 %}
-    <center>
-        {{ graph2|safe }}
-    </center>
-    {% endif %}
+{% if error %}
+<h2>
+fill up the form properly
+</h2>
+<form method="post" enctype="multipart/form-data" action="/statistics">
+{% csrf_token %}
+<input type="submit" class="button" value="back to statistical tests">
+</form>
+{% endif %}
 
 </body>
 </html>

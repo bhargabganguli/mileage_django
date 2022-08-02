@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MPG prediction usecase</title>
+</head>
+<style>
+.mydiv{
+    border: 3px outset red;
+    background-color: rgb(255,230,238);
+    text-align:center;
+}
+</style>
+     <script type="text/javascript"> 
+        
+        function preventBack() { 
+
+            window.history.forward();  
+
+        } 
+
+          
+
+        setTimeout("preventBack()", 0); 
+
+          
+
+        window.onunload = function () { null }; 
+
+    </script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" >
+
+<body style="background-color:powderblue;">
+ <!--<img src="{% static 'end.png' %}" alt="hi">-->    
+ <center>
+    <h2>Welcome to matchstick game</h2>
+   
+    
+    <h4>Your oponent is me and <br> HI! I'm Bhargab :)</h4>
+   </center>
+    <marquee scrollamount="7" behavior="alternate"> 
+    <h2 style="color:Red">IF U BEAT ME WILL GET INR 200 directly</h2>
+    </marquee>
+     
+    <center>
+    
+    <h2>Rules : maximum matchsticks you can pick is 4 and minimum 1</h2>
+    <h2>You have initially 21 matchsticks</h2>
+    {% if first_time %}
+     {% for i in figure %}
+
+    <img width=50 src="https://i.ibb.co/6n5B0m6/matchstick.png" alt="matchstick" border="0">
+
+    
+     {% endfor %}
+     {% endif %}
+    <h2>Whoever picks the last matchstick will loose the game :) </h2>
+    <h3>ALL THE BEST </h3>
+    
+    </center>
+    
+    <br><br>
+    
+    {% if second_time %}
+    
+    
+    <h3> for your information back button is disabled in this page </h3>
+    
+    <form method="POST" action="/" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="submit" name="submit data" value="QUIT THE GAME" style="height:50px; width:200px;">
+    </form>    
+<div class="mydiv" tabindex="0">
+
+    <h2> You picked {{user_pick}} sticks then {{after_user}} sticks were left</h2>
+    <br>
+    <h2>then I picked {{comp_pick}} match stick(s) and finally </h2>
+    <br>
+    <h1 style="color:Red">match stick left is {{after_comp}}</h1>
+    
+    {% for i in figure %}
+
+   <img width=50 src="https://i.ibb.co/6n5B0m6/matchstick.png" alt="matchstick" border="0">
+
+   
+    {% endfor %}
+    {% endif %}
+    
+    
+    
+    {% if win %}
+    <form method="POST" action="/matchstick" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2>CHOOSE no. of matchstick u want to pick</h2>
+        <!--<input type="number" name="pick" min="1" max="4">-->
+        <input type="submit" name="pick" value="1" style="height:50px; width:200px;">
+        <input type="submit" name="pick" value="2" style="height:50px; width:200px;">
+        <input type="submit" name="pick" value="3" style="height:50px; width:200px;">
+        <input type="submit" name="pick" value="4" style="height:50px; width:200px;">
+    </form>
+    {% endif %}
+    
+    
+    {% if lost %}
+    <h2>SORRY ONLY 1 stick was left so YOU LOST the MATCH</h2>
+     <form method="POST" action="/" enctype="multipart/form-data">
+         {% csrf_token %}
+         <input type="submit" name="submit data" value="BACK TO HOME">
+     </form>
+    {% endif %}
+ 
+</div>   
+</body>
+</html>
+

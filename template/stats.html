@@ -1,0 +1,47 @@
+
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" >
+<body>
+statistical analysis
+ <!-- 1 sample t test-->
+ 
+ 
+ <form style="background-color:pink" method="POST" action="/ttest" enctype="multipart/form-data">
+     {% csrf_token %}
+     
+     <h2>apply 1 sample t test or equivalent non parametric test i.e. 1 sample wilcoxon test </h2>
+     <label>Choose attribute</label>
+     <select id ="columns" name="column1">
+     {% for i in col_name %}
+     <option value="{{i}}">{{i}}</option>
+     {% endfor %}
+     </select>
+     <br><br>
+     <label>Choose population mean (benchmark) value to compare</label>
+     <input type="number" name="benchmark" step=any>
+     <br><br>
+     <label>ALTERNATE HYPOTHESIS:</label>
+     <br>
+     Two sided:
+     <br>
+     <label>mean of population is not equal to the given benchmark</label>
+     <input type="radio" name="alternative" value="two-sided" checked=checked>
+     <br><br>
+     one sided:
+     <br>
+     <label>mean of population is less than the given benchmark</label>
+     <input type="radio" name="alternative" value="less">
+     <label>mean of population is greater than the given benchmark</label>
+     <input type="radio" name="alternative" value="greater">
+     <br>
+     <br>
+     <input type="submit" name="submit data" value="1 sample T test" style="height:50px; width:200px; background-color:powderblue">
+ </form>
+ 
+ <!-- 2 sample t test-->
+ 
+ 
+ 
+ 
+<body>
+</html>
